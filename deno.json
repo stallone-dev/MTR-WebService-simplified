@@ -4,7 +4,13 @@
     "exports": "./mod.ts",
 
     "publish": {
-        "exclude": ["./test/*", "deno.lock", ".editorconfig", ".vscode/*"]
+        "exclude": [
+            "./test/*",
+            "deno.lock",
+            ".editorconfig",
+            ".vscode/*",
+            ".github/*"
+        ]
     },
 
     "tasks": {},
