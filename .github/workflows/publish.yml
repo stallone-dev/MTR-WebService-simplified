@@ -1,7 +1,10 @@
 name: Publish
 run-name: ${{ github.actor }} is publishing on JSR 🚀
 
-on: [push]
+on:
+    push:
+        branches:
+          - main
 
 jobs:
     publish:
