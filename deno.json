@@ -1,0 +1,33 @@
+{
+    "name": "@stallone-dev/mtr-web-service",
+    "version": "0.0.1",
+    "exports": "./mod.ts",
+
+    "publish": {
+        "exclude": ["./test"]
+    },
+
+    "tasks": {},
+
+    "compilerOptions": {
+        "strict": true
+    },
+
+    "lint": {
+        "rules": { "tags": ["recommended"] },
+        "include": ["./src"]
+    },
+
+    "fmt": {
+        "useTabs": false,
+        "lineWidth": 80,
+        "indentWidth": 4,
+        "semiColons": true,
+        "singleQuote": false,
+        "proseWrap": "preserve"
+    },
+
+    "imports": {
+        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.4.0"
+    }
+}

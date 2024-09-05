@@ -1,0 +1,14 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@stallone-dev/types-mtr-web-service@^0.4.0": "jsr:@stallone-dev/types-mtr-web-service@0.4.0"
+    },
+    "jsr": {
+      "@stallone-dev/types-mtr-web-service@0.4.0": {
+        "integrity": "0189d3dadc44a16d09887f50967963135d429e261fa1f11badf26d1d3a6322e8"
+      }
+    }
+  },
+  "remote": {}
+}
