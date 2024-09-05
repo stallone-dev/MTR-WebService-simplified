@@ -1,10 +1,10 @@
 {
     "name": "@stallone-dev/mtr-web-service",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "exports": "./mod.ts",
 
     "publish": {
-        "exclude": ["./test"]
+        "exclude": ["./test/*", "deno.lock", ".editorconfig", ".vscode/*"]
     },
 
     "tasks": {},
