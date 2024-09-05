@@ -10,5 +10,10 @@
       }
     }
   },
-  "remote": {}
+  "remote": {},
+  "workspace": {
+    "dependencies": [
+      "jsr:@stallone-dev/types-mtr-web-service@^0.4.0"
+    ]
+  }
 }
