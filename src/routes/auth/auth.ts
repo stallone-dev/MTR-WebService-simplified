@@ -5,9 +5,12 @@ import {
 } from "@stallone-dev/types-mtr-web-service";
 import { ApiRequest } from "../../model/api-request.ts";
 
-export { getAuthToken };
+export { gerarAuthToken };
 
-class getAuthToken extends ApiRequest {
+/**
+ * Geração de um token de acesso para consumo das APIs
+ */
+class gerarAuthToken extends ApiRequest {
     private login: MtrWSType.auth.request;
 
     constructor(
@@ -21,7 +24,7 @@ class getAuthToken extends ApiRequest {
     /**
      * Geração de um token de acesso para uso da API
      */
-    public async getResult(): Promise<MtrWSType.responseBody.gerarToken> {
+    public async getResult() {
         const req = await this.makeRequest<
             MtrWSType.requestBody.gerarToken,
             MtrWSType.responseBody.gerarToken

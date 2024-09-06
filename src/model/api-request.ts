@@ -56,7 +56,7 @@ abstract class ApiRequest {
 
         /** Verificação dos erros internos da API */
         if (result.erro !== false) {
-            throw new Error(String(result.erro));
+            throw new Error(String(await result.erro));
         }
 
         /** Retorno somente do resultado da requisição */
@@ -66,5 +66,5 @@ abstract class ApiRequest {
     /**
      * Abstração do consumo da função 'makeRequest'
      */
-    public abstract getResult(): Promise<unknown>;
+    public abstract getResult(): unknown;
 }

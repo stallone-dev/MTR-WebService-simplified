@@ -5,9 +5,9 @@ import {
 } from "@stallone-dev/types-mtr-web-service";
 import { ApiRequest } from "../../model/api-request.ts";
 
-export { getMtrData };
+export { consultarDadosMTR };
 
-class getMtrData extends ApiRequest {
+class consultarDadosMTR extends ApiRequest {
     private token: MtrWSType.auth.token;
     private mtr: string;
 
@@ -24,11 +24,15 @@ class getMtrData extends ApiRequest {
     /**
      * Consultar dados de um MTR
      */
-    public async getResult(): Promise<MtrWSType.responseBody.consultarMtr> {
+    public async getResult() {
         const req = await this.makeRequest<
             MtrWSType.requestBody.consultarMTR,
             MtrWSType.responseBody.consultarMtr
-        >({ method: "GET", pathString: this.mtr, auth: this.token });
+        >({
+            method: "GET",
+            pathString: this.mtr,
+            auth: this.token,
+        });
 
         return req;
     }
