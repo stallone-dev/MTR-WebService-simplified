@@ -34,6 +34,7 @@
     },
 
     "imports": {
-        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.4.0"
+        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.4.0",
+        "@std/fs": "jsr:@std/fs@^1.0.3"
     }
 }
