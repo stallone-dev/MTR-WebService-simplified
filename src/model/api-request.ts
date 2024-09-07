@@ -9,7 +9,7 @@ export { ApiRequest };
 interface internalRequest<T_request> {
     method: "POST" | "GET";
     pathString?: string;
-    body?: T_request;
+    body?: T_request | T_request[];
     auth?: MtrWSType.auth.token;
 }
 
