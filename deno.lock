@@ -2,13 +2,34 @@
   "version": "3",
   "packages": {
     "specifiers": {
-      "jsr:@stallone-dev/types-mtr-web-service@^0.4.0": "jsr:@stallone-dev/types-mtr-web-service@0.4.0",
+      "jsr:@stallone-dev/types-mtr-web-service@^0.5.0": "jsr:@stallone-dev/types-mtr-web-service@0.5.0",
+      "jsr:@std/assert@^1.0.4": "jsr:@std/assert@1.0.4",
+      "jsr:@std/data-structures@^1.0.2": "jsr:@std/data-structures@1.0.2",
+      "jsr:@std/expect@^1.0.2": "jsr:@std/expect@1.0.2",
       "jsr:@std/fs@^1.0.3": "jsr:@std/fs@1.0.3",
-      "jsr:@std/path@^1.0.4": "jsr:@std/path@1.0.4"
+      "jsr:@std/internal@^1.0.3": "jsr:@std/internal@1.0.3",
+      "jsr:@std/path@^1.0.4": "jsr:@std/path@1.0.4",
+      "jsr:@std/testing@^1.0.2": "jsr:@std/testing@1.0.2"
     },
     "jsr": {
-      "@stallone-dev/types-mtr-web-service@0.4.0": {
-        "integrity": "0189d3dadc44a16d09887f50967963135d429e261fa1f11badf26d1d3a6322e8"
+      "@stallone-dev/types-mtr-web-service@0.5.0": {
+        "integrity": "36702157973c3bcd6b1327a0ca504984e657b342e5263b365c08fa21a04eb022"
+      },
+      "@std/assert@1.0.4": {
+        "integrity": "d4c767ea578e5bc09c15b6e503376003e5b2d1f4c0cdf08524a92101ff4d7b96",
+        "dependencies": [
+          "jsr:@std/internal@^1.0.3"
+        ]
+      },
+      "@std/data-structures@1.0.2": {
+        "integrity": "d586efced05ed91923514a192996d23673f32f695f7ebc37f0cc1e17928be600"
+      },
+      "@std/expect@1.0.2": {
+        "integrity": "37d5162eb1d30505e09f77f3fabbf6cde1e81ed0e72d2371cddbce1173eb86b4",
+        "dependencies": [
+          "jsr:@std/assert@^1.0.4",
+          "jsr:@std/internal@^1.0.3"
+        ]
       },
       "@std/fs@1.0.3": {
         "integrity": "3cb839b1360b0a42d8b367c3093bfe4071798e6694fa44cf1963e04a8edba4fe",
@@ -16,16 +37,30 @@
           "jsr:@std/path@^1.0.4"
         ]
       },
+      "@std/internal@1.0.3": {
+        "integrity": "208e9b94a3d5649bd880e9ca38b885ab7651ab5b5303a56ed25de4755fb7b11e"
+      },
       "@std/path@1.0.4": {
         "integrity": "48dd5d8389bcfcd619338a01bdf862cb7799933390146a54ae59356a0acc7105"
+      },
+      "@std/testing@1.0.2": {
+        "integrity": "9e8a7f4e26c219addabe7942d09c3450fa0a74e9662341961bc0ef502274dec3",
+        "dependencies": [
+          "jsr:@std/assert@^1.0.4",
+          "jsr:@std/data-structures@^1.0.2",
+          "jsr:@std/fs@^1.0.3",
+          "jsr:@std/internal@^1.0.3",
+          "jsr:@std/path@^1.0.4"
+        ]
       }
     }
   },
   "remote": {},
   "workspace": {
     "dependencies": [
-      "jsr:@stallone-dev/types-mtr-web-service@^0.4.0",
-      "jsr:@std/fs@^1.0.3"
+      "jsr:@stallone-dev/types-mtr-web-service@^0.5.0",
+      "jsr:@std/expect@^1.0.2",
+      "jsr:@std/testing@^1.0.2"
     ]
   }
 }
