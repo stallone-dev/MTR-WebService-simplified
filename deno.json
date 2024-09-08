@@ -2,19 +2,16 @@
     "name": "@stallone-dev/mtr-web-service",
     "version": "0.0.2",
     "exports": "./mod.ts",
+    "license": "MPL-2.0",
 
     "publish": {
-        "exclude": [
-            "./test/*",
-            "deno.lock",
-            ".editorconfig",
-            ".vscode/*",
-            ".github/*"
-        ]
+        "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".env*"]
     },
 
-    "tasks": {},
-
+    "tasks": {
+        "test": "deno test --env-file=.env --reporter=pretty --allow-env ./test",
+        "test:dev": "deno test --env-file=.env --reporter=dot --allow-env --watch ./test"
+    },
     "compilerOptions": {
         "strict": true
     },
@@ -23,7 +20,6 @@
         "rules": { "tags": ["recommended"] },
         "include": ["./src"]
     },
-
     "fmt": {
         "useTabs": false,
         "lineWidth": 80,
@@ -34,7 +30,8 @@
     },
 
     "imports": {
-        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.4.0",
-        "@std/fs": "jsr:@std/fs@^1.0.3"
+        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.5.0",
+        "@std/expect": "jsr:@std/expect@^1.0.2",
+        "@std/testing": "jsr:@std/testing@^1.0.2"
     }
 }
