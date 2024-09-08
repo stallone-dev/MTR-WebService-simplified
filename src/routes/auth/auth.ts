@@ -1,3 +1,7 @@
+/*
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 import {
     MtrWSBaseURL,
     MtrWSRoute,
@@ -11,14 +15,14 @@ export { gerarAuthToken };
  * Geração de um token de acesso para consumo das APIs
  */
 class gerarAuthToken extends ApiRequest {
-    private login: MtrWSType.auth.request;
+    private readonly credentials: MtrWSType.auth.credentials;
 
     constructor(
-        loginData: MtrWSType.auth.request,
+        credentialsData: MtrWSType.auth.credentials,
         API_BASE_URL: MtrWSBaseURL,
     ) {
         super(API_BASE_URL, MtrWSRoute.GERAR_TOKEN);
-        this.login = loginData;
+        this.credentials = credentialsData;
     }
 
     /**
@@ -26,9 +30,9 @@ class gerarAuthToken extends ApiRequest {
      */
     public async getResult() {
         const req = await this.makeRequest<
-            MtrWSType.requestBody.gerarToken,
-            MtrWSType.responseBody.gerarToken
-        >({ method: "POST", body: this.login });
+            MtrWSType.requestConfig.gerarAuthToken,
+            MtrWSType.responseConfig.gerarAuthToken
+        >({ method: "POST", body: this.credentials });
 
         return req;
     }
