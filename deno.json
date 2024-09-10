@@ -9,8 +9,8 @@
     },
 
     "tasks": {
-        "test": "deno test --env-file=.env --reporter=pretty --allow-env ./test",
-        "test:dev": "deno test --env-file=.env --reporter=dot --allow-env --watch ./test"
+        "test": "deno test --env-file=.env --reporter=pretty --allow-all ./test",
+        "test:dev": "deno test --env-file=.env --reporter=dot --allow-all --watch ./test"
     },
     "compilerOptions": {
         "strict": true

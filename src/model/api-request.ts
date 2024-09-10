@@ -60,7 +60,7 @@ abstract class ApiRequest {
 
         /** Verificação dos erros internos da API */
         if (result.erro !== false) {
-            throw new Error(JSON.stringify(result.erro));
+            throw new Error(result.mensagem as string);
         }
 
         /** Retorno somente do resultado da requisição */
