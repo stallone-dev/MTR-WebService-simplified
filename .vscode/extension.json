@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "denoland.vscode-deno",
+        "editorconfig.editorconfig",
+        "ms-vscode.vscode-typescript-next",
+        "yzhang.markdown-all-in-one",
+        "christian-kohler.path-intellisense",
+        "humao.rest-client"
+    ]
+}

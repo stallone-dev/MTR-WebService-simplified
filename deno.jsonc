@@ -1,0 +1,88 @@
+/*
+    My default DenoJS settings from general projects
+    Version: 2024/09
+
+    Goal: Make source code more strictly predictable and reliable, even if it involves sacrificing some performance during writing
+
+    Based on https://docs.deno.com/runtime/fundamentals/configuration/
+*/
+
+{
+    // ======= Dependency area =======
+
+    // General import packages and relative paths
+    "imports": {
+        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.6.0",
+        "@std/expect": "jsr:@std/expect@^1.0.2",
+        "@std/testing": "jsr:@std/testing@^1.0.2",
+        "~route/": "./src/routes/"
+    },
+
+    // ======= Tasks area =======
+
+    // General tasks to run with "deno task __COMMAND__"
+    "tasks": {
+        "test": "deno test --env-file=.env.development --reporter=pretty",
+        "test:dev": "deno test --env-file=.env.development --reporter=dot --watch"
+    },
+
+    // General test folders config
+    "test": {
+        "include": ["./test/"],
+        "exclude": ["./*"]
+    },
+
+    // ======= JSR publish area =======
+
+    "name": "@stallone-dev/mtr-web-service",
+    "version": "0.0.2",
+    "exports": "./mod.ts",
+    "license": "MPL-2.0",
+
+    "publish": {
+        "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".env*"],
+        "include": [".env.example"]
+    },
+
+    // ======= Source code standardization area =======
+
+    // Main formatter for source code styling
+    // For more details see https://docs.deno.com/runtime/fundamentals/linting_and_formatting/#available-options
+    "fmt": {
+        "lineWidth": 80,
+        "indentWidth": 4,
+        "useTabs": false,
+        "semiColons": true,
+        "singleQuote": false,
+        "proseWrap": "preserve"
+    },
+
+    // Main linter for source code standardization
+    // For more details see https://lint.deno.land/?q=&all=on
+    "lint": {
+        "exclude": ["!*.ts"],
+        "rules": {
+            "tags": ["recommended"],
+            "include": [
+                "eqeqeq",
+                "explicit-function-return-type",
+                "no-await-in-loop",
+                "no-boolean-literal-for-arguments",
+                "no-console",
+                "no-const-assign",
+                "no-eval",
+                "no-external-import",
+                "no-inferrable-types",
+                "no-non-null-assertion",
+                "no-self-compare",
+                "no-sparse-arrays",
+                "no-sync-fn-in-async-fn",
+                "no-throw-literal",
+                "no-undef",
+                "single-var-declarator",
+                "triple-slash-reference",
+                "verbatim-module-syntax"
+            ]
+        }
+    }
+}
