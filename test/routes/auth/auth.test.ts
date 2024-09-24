@@ -6,7 +6,7 @@ import {
     MtrWSBaseURL,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
-import { beforeAll, describe, it } from "@std/testing/bdd";
+import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
 import { gerarAuthToken } from "~route/auth/auth.ts";
@@ -20,12 +20,19 @@ describe("AUTH - Tests", () => {
     let _BASE_URL: MtrWSBaseURL;
 
     beforeAll(() => {
+        const _env = Deno.env.toObject();
+        const _base = (_env.TEST_BASE_API ?? "SINIR") as "SINIR" | "SIGOR";
+
         _CREDENTIALS = {
-            cpfCnpj: Deno.env.get("TEST_AUTH_CPF") ?? "",
-            senha: Deno.env.get("TEST_AUTH_PASSWORD") ?? "",
-            unidade: Deno.env.get("TEST_AUTH_UNIDADE") ?? "",
+            cpfCnpj: _env.TEST_AUTH_CPF ?? "",
+            senha: _env.TEST_AUTH_PASSWORD ?? "",
+            unidade: _env.TEST_AUTH_UNIDADE ?? "",
         };
-        _BASE_URL = MtrWSBaseURL.SINIR;
+        _BASE_URL = MtrWSBaseURL[_base];
+    });
+
+    afterAll(() => {
+        _CREDENTIALS = { cpfCnpj: "", senha: "", unidade: "" };
     });
 
     describe("Expected scenario", () => {
