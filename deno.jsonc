@@ -22,26 +22,24 @@
 
     // General tasks to run with "deno task __COMMAND__"
     "tasks": {
-        "test": "deno test --env-file=.env.development --reporter=pretty",
-        "test:dev": "deno test --env-file=.env.development --reporter=dot --watch"
+        "test": "deno test --env-file=.env.development --reporter=pretty --allow-all",
+        "test:dev": "deno test --env-file=.env.development --reporter=dot --watch --allow-all"
     },
 
     // General test folders config
     "test": {
-        "include": ["./test/"],
-        "exclude": ["./*"]
+        "include": ["./test"]
     },
 
     // ======= JSR publish area =======
 
     "name": "@stallone-dev/mtr-web-service",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "exports": "./mod.ts",
     "license": "MPL-2.0",
 
     "publish": {
-        "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".env*"],
-        "include": [".env.example"]
+        "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".env*"]
     },
 
     // ======= Source code standardization area =======
