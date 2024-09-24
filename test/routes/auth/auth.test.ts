@@ -30,7 +30,10 @@ describe("AUTH - Tests", () => {
 
     describe("Expected scenario", () => {
         it("Simple generate token", async () => {
-            const consult = new gerarAuthToken(_CREDENTIALS, _BASE_URL);
+            const consult = new gerarAuthToken({
+                credentials: _CREDENTIALS,
+                API_BASE_URL: _BASE_URL,
+            });
             const result = await consult.getResult();
 
             expect(result).toContain("Bearer");
@@ -41,7 +44,11 @@ describe("AUTH - Tests", () => {
         it("Invalid CPF", async () => {
             const { senha, unidade } = _CREDENTIALS;
             const cred = { cpfCnpj: "1234567890", senha, unidade };
-            const consult = new gerarAuthToken(cred, _BASE_URL);
+
+            const consult = new gerarAuthToken({
+                credentials: cred,
+                API_BASE_URL: _BASE_URL,
+            });
             const result = consult.getResult();
 
             const regex = new RegExp(/\bERRO 005\b/);
@@ -51,7 +58,11 @@ describe("AUTH - Tests", () => {
         it("Invalid Password", async () => {
             const { cpfCnpj, unidade } = _CREDENTIALS;
             const cred = { cpfCnpj, senha: "abcd123456", unidade };
-            const consult = new gerarAuthToken(cred, _BASE_URL);
+
+            const consult = new gerarAuthToken({
+                credentials: cred,
+                API_BASE_URL: _BASE_URL,
+            });
             const result = consult.getResult();
 
             const regex = new RegExp(/\bERRO 007\b/);
@@ -61,7 +72,11 @@ describe("AUTH - Tests", () => {
         it("Invalid Unity", async () => {
             const { cpfCnpj, senha } = _CREDENTIALS;
             const cred = { cpfCnpj, senha, unidade: "111111" };
-            const consult = new gerarAuthToken(cred, _BASE_URL);
+
+            const consult = new gerarAuthToken({
+                credentials: cred,
+                API_BASE_URL: _BASE_URL,
+            });
             const result = consult.getResult();
 
             const regex = new RegExp(/\bERRO 007\b/);

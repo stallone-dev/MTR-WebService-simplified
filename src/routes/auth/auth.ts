@@ -11,6 +11,12 @@ import { ApiRequest } from "../../model/api-request.ts";
 
 export { gerarAuthToken };
 
+/** Interface para implementação */
+interface authConfig {
+    credentials: MtrWSType.auth.credentials;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
 /**
  * Módulo de geração do Token de acesso da API
  *
@@ -33,12 +39,9 @@ export { gerarAuthToken };
 class gerarAuthToken extends ApiRequest {
     private readonly credentials: MtrWSType.auth.credentials;
 
-    constructor(
-        credentialsData: MtrWSType.auth.credentials,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+    constructor({ credentials, API_BASE_URL }: authConfig) {
         super(API_BASE_URL, MtrWSRoute.GERAR_TOKEN);
-        this.credentials = credentialsData;
+        this.credentials = credentials;
     }
 
     /**
