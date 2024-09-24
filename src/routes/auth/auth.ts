@@ -29,7 +29,10 @@ interface authConfig {
  *  const base_url = MtrWSBaseURL.SINIR;
  *
  *  // Preparando a API
- *  const consult = new gerarAuthToken(credentials, base_url);
+ *  const consult = new gerarAuthToken({
+ *      credentials: credentials,
+ *      API_BASE_URL: base_url
+ *  });
  *
  *  // Gerando o token de acesso
  *  const result = await consult.getResult();
