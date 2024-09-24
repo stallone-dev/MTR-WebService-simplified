@@ -3,7 +3,7 @@
 */
 
 import {
-    MtrWSBaseURL,
+    type MtrWSBaseURL,
     MtrWSRoute,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
@@ -12,7 +12,23 @@ import { ApiRequest } from "../../model/api-request.ts";
 export { gerarAuthToken };
 
 /**
- * Geração de um token de acesso para consumo das APIs
+ * Módulo de geração do Token de acesso da API
+ *
+ * @example
+ * ```ts
+ *  import { gerarAuthToken } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const credentials = { cpfCnpj:"123...", senha:"abc...", unidade:"123..." }
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *
+ *  // Preparando a API
+ *  const consult = new gerarAuthToken(credentials, base_url);
+ *
+ *  // Gerando o token de acesso
+ *  const result = await consult.getResult();
+ *  // ==> Bearer _TOKEN_
+ * ```
  */
 class gerarAuthToken extends ApiRequest {
     private readonly credentials: MtrWSType.auth.credentials;
@@ -26,12 +42,12 @@ class gerarAuthToken extends ApiRequest {
     }
 
     /**
-     * Geração de um token de acesso para uso da API
+     * Requisição do Token de acesso da API
      */
-    public async getResult() {
+    public async getResult(): Promise<MtrWSType.responseModel.gerarAuthToken> {
         const req = await this.makeRequest<
-            MtrWSType.requestConfig.gerarAuthToken,
-            MtrWSType.responseConfig.gerarAuthToken
+            MtrWSType.requestModel.gerarAuthToken,
+            MtrWSType.responseModel.gerarAuthToken
         >({ method: "POST", body: this.credentials });
 
         return req;
