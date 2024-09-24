@@ -47,8 +47,8 @@ describe("AUTH - Tests", () => {
         });
     });
 
-    describe("Invalid credentials", () => {
-        it("Invalid CPF", async () => {
+    describe("Invalid scenarios", () => {
+        it("CPF", async () => {
             const { senha, unidade } = _CREDENTIALS;
             const cred = { cpfCnpj: "1234567890", senha, unidade };
 
@@ -62,7 +62,7 @@ describe("AUTH - Tests", () => {
             await expect(result).rejects.toThrow(regex);
         });
 
-        it("Invalid Password", async () => {
+        it("Password", async () => {
             const { cpfCnpj, unidade } = _CREDENTIALS;
             const cred = { cpfCnpj, senha: "abcd123456", unidade };
 
@@ -76,7 +76,7 @@ describe("AUTH - Tests", () => {
             await expect(result).rejects.toThrow(regex);
         });
 
-        it("Invalid Unity", async () => {
+        it("Unity", async () => {
             const { cpfCnpj, senha } = _CREDENTIALS;
             const cred = { cpfCnpj, senha, unidade: "111111" };
 
@@ -87,6 +87,21 @@ describe("AUTH - Tests", () => {
             const result = consult.getResult();
 
             const regex = new RegExp(/\bERRO 007\b/);
+            await expect(result).rejects.toThrow(regex);
+        });
+
+        it("Base URL", async () => {
+            const base_url = Deno.env.get("TEST_BASE_API") === "SINIR"
+                ? MtrWSBaseURL.SIGOR
+                : MtrWSBaseURL.SINIR;
+
+            const consult = new gerarAuthToken({
+                credentials: _CREDENTIALS,
+                API_BASE_URL: base_url,
+            });
+            const result = consult.getResult();
+
+            const regex = new RegExp(/\bERRO 001\b/);
             await expect(result).rejects.toThrow(regex);
         });
     });
