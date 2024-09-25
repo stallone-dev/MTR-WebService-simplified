@@ -2,11 +2,15 @@
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { MtrWSBaseURL, MtrWSType } from "@stallone-dev/types-mtr-web-service";
-import { gerarAuthToken } from "../src/routes/auth/auth.ts";
+import {
+    MtrWSBaseURL,
+    type MtrWSType,
+} from "@stallone-dev/types-mtr-web-service";
+import { gerarAuthToken } from "~route/auth/auth.ts";
 
 export { generateTemporaryToken };
 
+// deno-lint-ignore no-console
 console.log(await generateTemporaryToken(MtrWSBaseURL.SINIR));
 
 /**
@@ -26,15 +30,14 @@ async function generateTemporaryToken(
     } catch {
         // Preparo para criação de um novo token
         const credentials: MtrWSType.auth.credentials = {
-            cpfCnpj: "1234"!,
-            senha: Deno.env.get("TEST_AUTH_PASSWORD")!,
-            unidade: Deno.env.get("TEST_AUTH_UNIDADE")!,
+            cpfCnpj: Deno.env.get("TEST_AUTH_CPF") ?? "",
+            senha: Deno.env.get("TEST_AUTH_PASSWORD") ?? "",
+            unidade: Deno.env.get("TEST_AUTH_UNIDADE") ?? "",
         };
 
         // Geraçaõ do token
         TOKEN = await new gerarAuthToken(
-            credentials,
-            BASE_API_URL,
+            { credentials: credentials, API_BASE_URL: BASE_API_URL },
         ).getResult();
 
         // Processo de criação e escrita no arquivo (específico do DENO.JS)

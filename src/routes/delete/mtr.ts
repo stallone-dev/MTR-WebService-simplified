@@ -1,5 +1,9 @@
+/*
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 import {
-    MtrWSBaseURL,
+    type MtrWSBaseURL,
     MtrWSRoute,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
@@ -9,10 +13,10 @@ export { cancelarMTR };
 
 class cancelarMTR extends ApiRequest {
     private token: MtrWSType.auth.token;
-    private dados_para_cancelamento_mtr: MtrWSType.requestBody.cancelarMtr;
+    private dados_para_cancelamento_mtr: MtrWSType.requestModel.cancelarMTR;
 
     constructor(
-        dadosParaCancelamentoMTR: MtrWSType.requestBody.cancelarMtr,
+        dadosParaCancelamentoMTR: MtrWSType.requestModel.cancelarMTR,
         authToken: MtrWSType.auth.token,
         API_BASE_URL: MtrWSBaseURL,
     ) {
@@ -24,10 +28,10 @@ class cancelarMTR extends ApiRequest {
     /**
      * Consultar dados de um MTR
      */
-    public async getResult() {
+    public async getResult(): Promise<MtrWSType.responseModel.cancelarMTR> {
         const req = await this.makeRequest<
-            MtrWSType.requestBody.cancelarMtr,
-            MtrWSType.responseBody.cancelarMtr
+            MtrWSType.requestModel.cancelarMTR,
+            MtrWSType.responseModel.cancelarMTR
         >({
             method: "POST",
             body: this.dados_para_cancelamento_mtr,

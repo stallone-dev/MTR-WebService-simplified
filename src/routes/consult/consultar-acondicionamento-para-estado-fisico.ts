@@ -1,16 +1,20 @@
+/*
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 import {
-    MtrWSBaseURL,
+    type MtrWSBaseURL,
     MtrWSRoute,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
 import { ApiRequest } from "../../model/api-request.ts";
 
-export { consultarAcondicionamentoPorEstadoFisico };
+export { consultarAcondicionamentoParaEstadoFisico };
 
 /**
  * Consulta dos tipos de acondicionamento disponíveis para um determinado código de estado físico
  */
-class consultarAcondicionamentoPorEstadoFisico extends ApiRequest {
+class consultarAcondicionamentoParaEstadoFisico extends ApiRequest {
     private token: MtrWSType.auth.token;
     private estado_fisico_ID: number;
 
@@ -27,10 +31,12 @@ class consultarAcondicionamentoPorEstadoFisico extends ApiRequest {
     /**
      * Resultado da consulta de acondicionamentos disponíveis para um determinado estado físico
      */
-    public async getResult() {
+    public async getResult(): Promise<
+        MtrWSType.responseModel.consultarAcondicionamentosParaEstadoFisico
+    > {
         const req = await this.makeRequest<
-            MtrWSType.requestBody.consultarAcondicionamentoPorEstadoFisico,
-            MtrWSType.responseBody.consultarAcondicionamentoPorEstadoFisico
+            MtrWSType.requestModel.consultarAcondicionamentosParaEstadoFisico,
+            MtrWSType.responseModel.consultarAcondicionamentosParaEstadoFisico
         >({
             method: "POST",
             pathString: String(this.estado_fisico_ID),

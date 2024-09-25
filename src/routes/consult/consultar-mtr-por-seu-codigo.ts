@@ -1,5 +1,9 @@
+/*
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 import {
-    MtrWSBaseURL,
+    type MtrWSBaseURL,
     MtrWSRoute,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
@@ -9,10 +13,10 @@ export { consultarMtrPorSeuCodigo };
 
 class consultarMtrPorSeuCodigo extends ApiRequest {
     private token: MtrWSType.auth.token;
-    private seu_codigo: MtrWSType.requestBody.retornaManifestoSeuCodigo;
+    private seu_codigo: MtrWSType.requestModel.retornaMTRsPorSeuCodigo;
 
     constructor(
-        seuCodigo: MtrWSType.requestBody.retornaManifestoSeuCodigo,
+        seuCodigo: MtrWSType.requestModel.retornaMTRsPorSeuCodigo,
         authToken: MtrWSType.auth.token,
         API_BASE_URL: MtrWSBaseURL,
     ) {
@@ -24,10 +28,12 @@ class consultarMtrPorSeuCodigo extends ApiRequest {
     /**
      * Consultar dados de um MTR
      */
-    public async getResult() {
+    public async getResult(): Promise<
+        MtrWSType.responseModel.retornaMTRsPorSeuCodigo
+    > {
         const req = await this.makeRequest<
-            MtrWSType.requestBody.retornaManifestoSeuCodigo,
-            MtrWSType.responseBody.consultarMtr
+            MtrWSType.requestModel.retornaMTRsPorSeuCodigo,
+            MtrWSType.responseModel.retornaMTRsPorSeuCodigo
         >({
             method: "POST",
             body: this.seu_codigo,

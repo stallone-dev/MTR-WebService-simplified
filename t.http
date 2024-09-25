@@ -1,0 +1,14 @@
+
+@auth = ""
+
+POST https://admin.sinir.gov.br/apiws/rest/gettoken HTTP/1.1
+Content-Type: "application/json"
+
+{
+}
+
+###
+
+POST https://admin.sinir.gov.br/apiws/rest/retornaListaAcondicionamento HTTP/1.1
+content-type: "application/json"
+Authorization: @{{auth}}

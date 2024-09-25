@@ -1,5 +1,9 @@
+/*
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 import {
-    MtrWSBaseURL,
+    type MtrWSBaseURL,
     MtrWSRoute,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
@@ -9,10 +13,10 @@ export { gerarCDF };
 
 class gerarCDF extends ApiRequest {
     private token: MtrWSType.auth.token;
-    private dados_mtr_para_certificacao: MtrWSType.requestBody.gerarCdf;
+    private dados_mtr_para_certificacao: MtrWSType.requestModel.gerarCDF;
 
     constructor(
-        dadosMTRsParaCertificacao: MtrWSType.requestBody.gerarCdf,
+        dadosMTRsParaCertificacao: MtrWSType.requestModel.gerarCDF,
         authToken: MtrWSType.auth.token,
         API_BASE_URL: MtrWSBaseURL,
     ) {
@@ -24,10 +28,10 @@ class gerarCDF extends ApiRequest {
     /**
      * Consultar dados de um MTR
      */
-    public async getResult() {
+    public async getResult(): Promise<MtrWSType.responseModel.gerarCDF> {
         const req = await this.makeRequest<
-            MtrWSType.requestBody.gerarCdf,
-            MtrWSType.responseBody.gerarCdf
+            MtrWSType.requestModel.gerarCDF,
+            MtrWSType.responseModel.gerarCDF
         >({
             method: "POST",
             body: this.dados_mtr_para_certificacao,

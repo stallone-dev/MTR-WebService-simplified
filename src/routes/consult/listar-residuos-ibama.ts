@@ -1,5 +1,9 @@
+/*
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 import {
-    MtrWSBaseURL,
+    type MtrWSBaseURL,
     MtrWSRoute,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
@@ -14,17 +18,17 @@ class listarResiduos extends ApiRequest {
         authToken: MtrWSType.auth.token,
         API_BASE_URL: MtrWSBaseURL,
     ) {
-        super(API_BASE_URL, MtrWSRoute.LISTAR_RESIDUOS_IBAMA);
+        super(API_BASE_URL, MtrWSRoute.LISTAR_RESIDUOS);
         this.token = authToken;
     }
 
     /**
      * Consultar dados de um MTR
      */
-    public async getResult() {
+    public async getResult(): Promise<MtrWSType.responseModel.listarResiduos> {
         const req = await this.makeRequest<
-            MtrWSType.requestBody.listarResiduos,
-            MtrWSType.responseBody.listarResiduos
+            MtrWSType.requestModel.listarResiduos,
+            MtrWSType.responseModel.listarResiduos
         >({
             method: "POST",
             auth: this.token,
