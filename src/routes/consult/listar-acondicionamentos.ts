@@ -42,9 +42,8 @@ class listarAcondicionamentos extends ApiRequest {
             MtrWSType.requestModel.listarAcondiconamentos,
             MtrWSType.responseModel.listarAcondicionamentos
         >({
-            method: "POST",
+            method: "GET",
             auth: this.token,
-            body: null,
         });
 
         return req;
