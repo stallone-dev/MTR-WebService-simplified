@@ -22,13 +22,16 @@
 
     // General tasks to run with "deno task __COMMAND__"
     "tasks": {
+        "coverage": "deno test --env-file=.env.development --reporter=dot --allow-all --coverage=./coverage-log ; deno coverage ./coverage-log/ --lcov > ./coverage/coverage.lcov",
+        "coverage:report": "deno task coverage ; genhtml -o ./coverage ./coverage/coverage.lcov",
         "test": "deno test --env-file=.env.development --reporter=pretty --allow-all",
         "test:dev": "deno test --env-file=.env.development --reporter=dot --watch --allow-all"
     },
 
     // General test folders config
     "test": {
-        "include": ["./test"]
+        "include": ["./test"],
+        "exclude": ["./test/token-generator-for-tests.ts"]
     },
 
     // ======= JSR publish area =======
