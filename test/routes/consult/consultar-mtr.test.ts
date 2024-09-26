@@ -13,7 +13,7 @@ import { expect } from "@std/expect";
 import { consultarDadosDoMTR } from "~route/consult/consultar-mtr.ts";
 
 /*
-    Testes para validação das APIs de consulta do MTR individual
+    Testes para validação da API de consulta do MTR individual
 */
 
 describe("CONSULT-MTR - Tests", () => {
