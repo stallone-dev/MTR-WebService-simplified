@@ -11,13 +11,38 @@ import { ApiRequest } from "../../model/api-request.ts";
 
 export { listarTratamentos };
 
+/** Interface para implementação */
+interface listTratamentosConfig {
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
+/**
+ * Módulo de listagem dos tratamentos válidos
+ *
+ * @example
+ * ```ts
+ *  import { listarTratamentos } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *
+ *  // Preparando a API
+ *  const consult = new listarTratamentos({
+ *      authToken: token,
+ *      API_BASE_URL: base_url
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Lista-de-tratamentos * }
+ * ```
+ */
 class listarTratamentos extends ApiRequest {
     private token: MtrWSType.auth.token;
 
-    constructor(
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+    constructor({ authToken, API_BASE_URL }: listTratamentosConfig) {
         super(API_BASE_URL, MtrWSRoute.LISTAR_TRATAMENTOS);
         this.token = authToken;
     }
@@ -32,7 +57,7 @@ class listarTratamentos extends ApiRequest {
             MtrWSType.requestModel.listarTratamentos,
             MtrWSType.responseModel.listarTratamentos
         >({
-            method: "POST",
+            method: "GET",
             auth: this.token,
         });
 
