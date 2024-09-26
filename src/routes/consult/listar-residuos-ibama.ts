@@ -11,13 +11,38 @@ import { ApiRequest } from "../../model/api-request.ts";
 
 export { listarResiduos };
 
+/** Interface para implementação */
+interface listResiduosConfig {
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
+/**
+ * Módulo de listagem dos resíduos existentes
+ *
+ * @example
+ * ```ts
+ *  import { listarResiduos } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *
+ *  // Preparando a API
+ *  const consult = new listarResiduos({
+ *      authToken: token,
+ *      API_BASE_URL: base_url
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Lista-de-residuos * }
+ * ```
+ */
 class listarResiduos extends ApiRequest {
     private token: MtrWSType.auth.token;
 
-    constructor(
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+    constructor({ authToken, API_BASE_URL }: listResiduosConfig) {
         super(API_BASE_URL, MtrWSRoute.LISTAR_RESIDUOS);
         this.token = authToken;
     }
@@ -30,7 +55,7 @@ class listarResiduos extends ApiRequest {
             MtrWSType.requestModel.listarResiduos,
             MtrWSType.responseModel.listarResiduos
         >({
-            method: "POST",
+            method: "GET",
             auth: this.token,
         });
 
