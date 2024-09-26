@@ -22,6 +22,21 @@ interface listAcondicionamentosConfig {
  *
  * @example
  * ```ts
+ *  import { listarAcondicionamentos } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *
+ *  // Preparando a API
+ *  const consult = new listarAcondicionamentos({
+ *      authToken: token,
+ *      API_BASE_URL: base_url
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Lista-de-acondicionamentos * }
  * ```
  */
 class listarAcondicionamentos extends ApiRequest {

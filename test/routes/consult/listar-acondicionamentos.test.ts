@@ -13,10 +13,10 @@ import { expect } from "@std/expect";
 import { listarAcondicionamentos } from "~route/consult/listar-acondicionamentos.ts";
 
 /*
-    Testes para validação das APIs de consulta do MTR individual
+    Testes para validação da API de listagem de acondicionamentos
 */
 
-describe("CONSULT-MTR - Tests", () => {
+describe("LISTAR-ACONDICIONAMENTOS - Tests", () => {
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
 
@@ -40,7 +40,10 @@ describe("CONSULT-MTR - Tests", () => {
             });
             const result = await consult.getResult();
 
-            expect(result).not.toThrow();
+            expect(result[1]).toMatchObject({
+                "tiaCodigo": 4,
+                "tiaDescricao": "CAÇAMBA ABERTA",
+            });
         });
     });
 
