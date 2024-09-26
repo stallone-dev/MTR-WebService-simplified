@@ -11,13 +11,41 @@ import { ApiRequest } from "../../model/api-request.ts";
 
 export { listarUnidadesDeMedida };
 
+/** Interface para implementação */
+interface listUnidadeDeMedidaConfig {
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
+/**
+ * Módulo de listagem das unidades de medida válidas
+ *
+ * @example
+ * ```ts
+ *  import { listarUnidadesDeMedida } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *
+ *  // Preparando a API
+ *  const consult = new listarUnidadesDeMedida({
+ *      authToken: token,
+ *      API_BASE_URL: base_url
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Lista-de-unidades-de-medida * }
+ * ```
+ */
 class listarUnidadesDeMedida extends ApiRequest {
     private token: MtrWSType.auth.token;
 
-    constructor(
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+    constructor({
+        authToken,
+        API_BASE_URL,
+    }: listUnidadeDeMedidaConfig) {
         super(API_BASE_URL, MtrWSRoute.LISTAR_UNIDADES_MEDIDA);
         this.token = authToken;
     }
@@ -32,7 +60,7 @@ class listarUnidadesDeMedida extends ApiRequest {
             MtrWSType.requestModel.listarUnidadesMedida,
             MtrWSType.responseModel.listarUnidadesMedida
         >({
-            method: "POST",
+            method: "GET",
             auth: this.token,
         });
 
