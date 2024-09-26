@@ -11,13 +11,38 @@ import { ApiRequest } from "../../model/api-request.ts";
 
 export { listarEstadosFisicos };
 
+/** Interface para implementação */
+interface listEstadosFisicosConfig {
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
+/**
+ * Módulo de listagem das classes dos estados físicos válidos
+ *
+ * @example
+ * ```ts
+ *  import { listarEstadosFisicos } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *
+ *  // Preparando a API
+ *  const consult = new listarEstadosFisicos({
+ *      authToken: token,
+ *      API_BASE_URL: base_url
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Lista-de-estados-fisicos * }
+ * ```
+ */
 class listarEstadosFisicos extends ApiRequest {
     private token: MtrWSType.auth.token;
 
-    constructor(
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+    constructor({ authToken, API_BASE_URL }: listEstadosFisicosConfig) {
         super(API_BASE_URL, MtrWSRoute.LISTAR_ESTADOS_FISICOS);
         this.token = authToken;
     }
@@ -32,7 +57,7 @@ class listarEstadosFisicos extends ApiRequest {
             MtrWSType.requestModel.listarEstadosFisicos,
             MtrWSType.responseModel.listarEstadosFisicos
         >({
-            method: "POST",
+            method: "GET",
             auth: this.token,
         });
 
