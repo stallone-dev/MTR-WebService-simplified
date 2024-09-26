@@ -36,7 +36,7 @@ interface consultMTRConfig {
  *      API_BASE_URL: base_url
  *  });
  *
- *  // Gerando o token de acesso
+ *  // Capturando o resultado
  *  const result = await consult.getResult();
  *  // ==> { * MTR-object * }
  * ```
