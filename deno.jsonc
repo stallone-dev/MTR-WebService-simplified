@@ -2,8 +2,6 @@
     My default DenoJS settings from general projects
     Version: 2024/09
 
-    Goal: Make source code more strictly predictable and reliable, even if it involves sacrificing some performance during writing
-
     Based on https://docs.deno.com/runtime/fundamentals/configuration/
 */
 
@@ -12,23 +10,32 @@
 
     // General import packages and relative paths
     "imports": {
-        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.6.0",
+        // Relative path imports
+        "~route/": "./src/routes/",
+
+        // Testing packages
+        // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests
         "@std/expect": "jsr:@std/expect@^1.0.2",
         "@std/testing": "jsr:@std/testing@^1.0.2",
-        "~route/": "./src/routes/"
+
+        // Dependencies
+        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.6.0"
     },
 
     // ======= Tasks area =======
 
-    // General tasks to run with "deno task __COMMAND__"
+    // Tasks to run with "deno task __COMMAND__"
     "tasks": {
-        "coverage": "deno test --env-file=.env.development --reporter=dot --allow-all --coverage=./coverage-log ; deno coverage ./coverage-log/ --lcov > ./coverage/coverage.lcov",
-        "coverage:report": "deno task coverage ; genhtml -o ./coverage ./coverage/coverage.lcov",
-        "test": "deno test --env-file=.env.development --reporter=pretty --allow-all",
-        "test:dev": "deno test --env-file=.env.development --reporter=dot --watch --allow-all"
+        "coverage:report": "deno task coverage ; deno coverage ./coverage-log --lcov > ./coverage/coverage.lcov ; genhtml -o ./coverage ./coverage/coverage.lcov",
+
+        "coverage:dev": "deno task coverage ; deno coverage ./coverage-log",
+        "coverage": "deno task test --reporter=dot --coverage=./coverage-log",
+
+        "test:dev": "deno task test --reporter=dot --watch",
+        "test": "deno test --env-file=.env.development --allow-all"
     },
 
-    // General test folders config
+    // Test folders config
     "test": {
         "include": ["./test"],
         "exclude": ["./test/token-generator-for-tests.ts"]
