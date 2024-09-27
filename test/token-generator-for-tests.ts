@@ -10,9 +10,6 @@ import { gerarAuthToken } from "~route/auth/auth.ts";
 
 export { generateTemporaryToken };
 
-// deno-lint-ignore no-console
-console.log(await generateTemporaryToken(MtrWSBaseURL.SINIR));
-
 /**
  * Função para gerar um token de acesso ao sistema
  * @default BASE_API_URL = SINIR

@@ -1,0 +1,21 @@
+
+@cpf = {{_cpf}}
+@senha= {{_senha}}
+@unidade = {{_unidade}}
+
+# @name Auth
+POST https://admin.sinir.gov.br/apiws/rest/gettoken HTTP/1.1
+Content-Type: application/json
+
+{
+    "cpfCnpj": "{{cpf}}",
+    "senha": "{{senha}}",
+    "unidade": "{{unidade}}"
+}
+
+@auth = {{Auth.response.body.$.objetoResposta}}
+###
+
+GET https://admin.sinir.gov.br/apiws/rest/retornaListaAcondicionamentoPorEstadoFisico/1 HTTP/1.1
+content-Type: application/json
+Authorization: @{{auth}}
