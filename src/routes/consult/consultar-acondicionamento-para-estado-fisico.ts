@@ -11,19 +11,50 @@ import { ApiRequest } from "../../model/api-request.ts";
 
 export { consultarAcondicionamentoParaEstadoFisico };
 
+/** Interface para implementação */
+interface consultAcondicionamentoParaEstadoFisicoConfig {
+    codEstadoFisico: number;
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
 /**
- * Consulta dos tipos de acondicionamento disponíveis para um determinado código de estado físico
+ * Módulo de donsulta dos tipos de acondicionamento disponíveis para um determinado código de estado físico
+ *
+ * @example
+ * ```ts
+ *  import { consultarAcondicionamentoParaEstadoFisico } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *  const cod_estado = "1"
+ *
+ *  // Preparando a API
+ *  const consult = new consultarAcondicionamentoParaEstadoFisico({
+ *      codEstadoFisico: cod_estado,
+ *      authToken: token,
+ *      API_BASE_URL: base_url
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Lista-acondicionamentos-compatíveis * }
+ * ```
  */
 class consultarAcondicionamentoParaEstadoFisico extends ApiRequest {
     private token: MtrWSType.auth.token;
     private estado_fisico_ID: number;
 
-    constructor(
-        codEstadoFisico: number,
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
-        super(API_BASE_URL, MtrWSRoute.CONSULTAR_MTR);
+    constructor({
+        codEstadoFisico,
+        authToken,
+        API_BASE_URL,
+    }: consultAcondicionamentoParaEstadoFisicoConfig) {
+        super(
+            API_BASE_URL,
+            MtrWSRoute.CONSULTAR_ACONDICIONAMENTOS_PARA_ESTADO_FISICO,
+        );
         this.token = authToken;
         this.estado_fisico_ID = codEstadoFisico;
     }
@@ -38,7 +69,7 @@ class consultarAcondicionamentoParaEstadoFisico extends ApiRequest {
             MtrWSType.requestModel.consultarAcondicionamentosParaEstadoFisico,
             MtrWSType.responseModel.consultarAcondicionamentosParaEstadoFisico
         >({
-            method: "POST",
+            method: "GET",
             pathString: String(this.estado_fisico_ID),
             auth: this.token,
         });
