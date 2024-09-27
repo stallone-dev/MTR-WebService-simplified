@@ -19,28 +19,27 @@ interface consultClassePorCodIBAMAConfig {
 }
 
 /**
- * Módulo de consulta dos dados de um MTR através do "SeuCodigo"
- * @SIGOR_ONLY
+ * Módulo de consulta as classes compatíveis com determinado código IBAMA
  *
  * @example
  * ```ts
- *  import { consultarMtrPorSeuCodigo } from "..."
+ *  import { consultarClasseParaCodIBAMA } from "..."
  *  import { MtrWSBaseURL } from "..."
  *
  *  const token = "Bearer _TOKEN_"
  *  const base_url = MtrWSBaseURL.SINIR;
- *  const seu_codigo = { seuCodigo: "1234", suaUnidade: "1234" }
+ *  const cod_ibama = "170107"
  *
  *  // Preparando a API
- *  const consult = new consultarMtrPorSeuCodigo({
- *      seuCodigo: seu_codigo,
+ *  const consult = new consultarClasseParaCodIBAMA({
+ *      codigoResiduo: cod_ibama,
  *      authToken: token,
  *      API_BASE_URL: base_url
  *  });
  *
  *  // Capturando o resultado
  *  const result = await consult.getResult();
- *  // ==> { * MTR-object * }
+ *  // ==> { * Lista-classes-compatíveis * }
  * ```
  */
 class consultarClasseParaCodIBAMA extends ApiRequest {

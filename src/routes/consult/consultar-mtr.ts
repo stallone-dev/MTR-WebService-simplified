@@ -19,7 +19,7 @@ interface consultMTRConfig {
 }
 
 /**
- * Módulo de consulta dos dados completos de uma MTR
+ * Módulo de consulta dos dados completos de um MTR
  *
  * @example
  * ```ts
