@@ -10,15 +10,19 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { downloadCDF } from "../../../src/internal/download/cdf.ts";
+import { downloadMTR } from "~internal/download/mtr.ts";
 
 /*
     Testes para validação da API de download de CDF
 */
 
-describe("LISTAR-ACONDICIONAMENTOS - Tests", () => {
+describe("DOWNLOAD-DE-CDF - Tests", () => {
+    /** Teste muito demorado */
+    const _ignore = Deno.env.get("TEST_ENABLE_DANGEROUS_TESTS") === "FALSE";
+
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
+    let _MTR_ID: string;
 
     beforeAll(async () => {
         const _env = Deno.env.toObject();
@@ -26,32 +30,44 @@ describe("LISTAR-ACONDICIONAMENTOS - Tests", () => {
 
         _BASE_URL = MtrWSBaseURL[_base];
         _TOKEN = await generateTemporaryToken(_BASE_URL);
+        _MTR_ID = _env.TEST_CONSULT_MTR;
     });
 
     afterAll(() => {
         _TOKEN = "Bearer _";
     });
 
-    describe("Expected scenario", () => {
-        it("Simple get result", async () => {
-            const consult = new listarAcondicionamentos({
-                authToken: _TOKEN,
-                API_BASE_URL: _BASE_URL,
-            });
-            const result = await consult.getResult();
+    describe("Expected scenario", { ignore: _ignore }, () => {
+        // it("Simple get result", async () => {
+        //     const consult = new downloadMTR({
+        //         mtrID: _MTR_ID,
+        //         authToken: _TOKEN,
+        //         API_BASE_URL: _BASE_URL,
+        //     });
+        //     const result = await consult.getResult();
 
-            expect(result[1]).toMatchObject({
-                "tiaCodigo": 4,
-                "tiaDescricao": "CAÇAMBA ABERTA",
-            });
-        });
+        //     expect(result).toContain("%PDF-1.5");
+        // });
     });
 
     describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
-            const consult = new listarAcondicionamentos({
+            const consult = new downloadMTR({
                 authToken: token,
+                mtrID: _MTR_ID,
+                API_BASE_URL: _BASE_URL,
+            });
+            const result = consult.getResult();
+
+            await expect(result).rejects.toThrow();
+        });
+
+        it("CDF ID", async () => {
+            const mtr_id = "123456789";
+            const consult = new downloadMTR({
+                authToken: _TOKEN,
+                mtrID: mtr_id,
                 API_BASE_URL: _BASE_URL,
             });
             const result = consult.getResult();
@@ -64,8 +80,9 @@ describe("LISTAR-ACONDICIONAMENTOS - Tests", () => {
                 ? MtrWSBaseURL.SIGOR
                 : MtrWSBaseURL.SINIR;
 
-            const consult = new listarAcondicionamentos({
+            const consult = new downloadMTR({
                 authToken: _TOKEN,
+                mtrID: _MTR_ID,
                 API_BASE_URL: base_url,
             });
             const result = consult.getResult();

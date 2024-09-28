@@ -10,48 +10,65 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { downloadCDF } from "../../../src/internal/download/cdf.ts";
+import { downloadCDF } from "~internal/download/cdf.ts";
 
 /*
     Testes para validação da API de download de CDF
 */
 
-describe("DOWNLOAD-DE-TMRs - Tests", () => {
+describe("DOWNLOAD-DE-CDF - Tests", () => {
+    /** Teste muito demorado */
+    const _ignore = Deno.env.get("TEST_ENABLE_DANGEROUS_TESTS") === "FALSE";
+
     let _TOKEN: MtrWSType.auth.token;
-    let _CDF: MtrWSBaseURL;
+    let _BASE_URL: MtrWSBaseURL;
+    let _CDF_ID: number;
 
     beforeAll(async () => {
         const _env = Deno.env.toObject();
         const _base = (_env.TEST_BASE_API ?? "SINIR") as "SINIR" | "SIGOR";
 
-        _CDF = MtrWSBaseURL[_base];
-        _TOKEN = await generateTemporaryToken(_CDF);
+        _BASE_URL = MtrWSBaseURL[_base];
+        _TOKEN = await generateTemporaryToken(_BASE_URL);
+        _CDF_ID = Number(_env.TEST_CONSULT_CDF);
     });
 
     afterAll(() => {
         _TOKEN = "Bearer _";
     });
 
-    describe("Expected scenario", () => {
-        it("Simple get result", async () => {
-            const consult = new downloadCDF({
-                authToken: _TOKEN,
-                cdfID: _CDF,
-            });
-            const result = await consult.getResult();
+    describe("Expected scenario", { ignore: _ignore }, () => {
+        // it("Simple get result", async () => {
+        //     const consult = new downloadCDF({
+        //         cdfID: _CDF_ID,
+        //         authToken: _TOKEN,
+        //         API_BASE_URL: _BASE_URL,
+        //     });
+        //     const result = await consult.getResult();
 
-            expect(result).toMatchObject({
-                "tiaCodigo": 4,
-                "tiaDescricao": "CAÇAMBA ABERTA",
-            });
-        "});
+        //     expect(result).toContain("%PDF-1.5");
+        // });
     });
-( "DESTINAÇÃO EM ATERRO - Tests", () => {
+
+    describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
             const consult = new downloadCDF({
                 authToken: token,
-                cdfID: _CDF,
+                cdfID: _CDF_ID,
+                API_BASE_URL: _BASE_URL,
+            });
+            const result = consult.getResult();
+
+            await expect(result).rejects.toThrow();
+        });
+
+        it("CDF ID", async () => {
+            const cdf_id = 123456789;
+            const consult = new downloadCDF({
+                authToken: _TOKEN,
+                cdfID: cdf_id,
+                API_BASE_URL: _BASE_URL,
             });
             const result = consult.getResult();
 
@@ -65,6 +82,7 @@ describe("DOWNLOAD-DE-TMRs - Tests", () => {
 
             const consult = new downloadCDF({
                 authToken: _TOKEN,
+                cdfID: _CDF_ID,
                 API_BASE_URL: base_url,
             });
             const result = consult.getResult();
