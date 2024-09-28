@@ -3,6 +3,6 @@
 */
 
 import { MtrWS } from "./src/_index.ts";
-import * as MtrWSInternals from "@stallone-dev/types-mtr-web-service";
+import { MtrWSInternal } from "./src/_internal.ts";
 
-export { MtrWS, MtrWSInternals };
+export { MtrWS, MtrWSInternal };

@@ -10,13 +10,13 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarTratamentos } from "~route/consult/listar-tratamentos.ts";
+import { listarUnidadesDeMedida } from "../../../src/internal/consult/listar-unidades.ts";
 
 /*
-    Testes para validação da API de listagem de tratamentos
+    Testes para validação da API de listagem de unidades de medida
 */
 
-describe("LISTAR-TRATAMENTOS - Tests", () => {
+describe("LISTAR-UNIDADES-DE-MEDIDA - Tests", () => {
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
 
@@ -34,15 +34,16 @@ describe("LISTAR-TRATAMENTOS - Tests", () => {
 
     describe("Expected scenario", () => {
         it("Simple get result", async () => {
-            const consult = new listarTratamentos({
+            const consult = new listarUnidadesDeMedida({
                 authToken: _TOKEN,
                 API_BASE_URL: _BASE_URL,
             });
             const result = await consult.getResult();
 
             expect(result[1]).toMatchObject({
-                "traCodigo": 4,
-                "traDescricao": "Aterro Resíduos Classe I",
+                "uniCodigo": 20,
+                "uniDescricao": "M³",
+                "uniSigla": "M³",
             });
         });
     });
@@ -50,7 +51,7 @@ describe("LISTAR-TRATAMENTOS - Tests", () => {
     describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
-            const consult = new listarTratamentos({
+            const consult = new listarUnidadesDeMedida({
                 authToken: token,
                 API_BASE_URL: _BASE_URL,
             });
@@ -64,7 +65,7 @@ describe("LISTAR-TRATAMENTOS - Tests", () => {
                 ? MtrWSBaseURL.SIGOR
                 : MtrWSBaseURL.SINIR;
 
-            const consult = new listarTratamentos({
+            const consult = new listarUnidadesDeMedida({
                 authToken: _TOKEN,
                 API_BASE_URL: base_url,
             });

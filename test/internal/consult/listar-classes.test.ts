@@ -10,16 +10,15 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { consultarDadosDoMTR } from "~route/consult/consultar-mtr.ts";
+import { listarClasses } from "../../../src/internal/consult/listar-classes.ts";
 
 /*
-    Testes para validação da API de consulta do MTR individual
+    Testes para validação da API de listagem de classes
 */
 
-describe("CONSULT-MTR - Tests", () => {
+describe("LISTAR-CLASSES - Tests", () => {
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
-    let _MTR: string;
 
     beforeAll(async () => {
         const _env = Deno.env.toObject();
@@ -27,7 +26,6 @@ describe("CONSULT-MTR - Tests", () => {
 
         _BASE_URL = MtrWSBaseURL[_base];
         _TOKEN = await generateTemporaryToken(_BASE_URL);
-        _MTR = _env.TEST_CONSULT_MTR ?? "";
     });
 
     afterAll(() => {
@@ -35,23 +33,25 @@ describe("CONSULT-MTR - Tests", () => {
     });
 
     describe("Expected scenario", () => {
-        it("Simple consult MTR", async () => {
-            const consult = new consultarDadosDoMTR({
-                mtrID: _MTR,
+        it("Simple get result", async () => {
+            const consult = new listarClasses({
                 authToken: _TOKEN,
                 API_BASE_URL: _BASE_URL,
             });
             const result = await consult.getResult();
 
-            expect(result).toMatchObject({ manNumero: _MTR });
+            expect(result[1]).toMatchObject({
+                "claCodigo": 43,
+                "claDescricao": "CLASSE II A",
+                "claResolucao": "NBR 10.004",
+            });
         });
     });
 
     describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
-            const consult = new consultarDadosDoMTR({
-                mtrID: _MTR,
+            const consult = new listarClasses({
                 authToken: token,
                 API_BASE_URL: _BASE_URL,
             });
@@ -60,25 +60,12 @@ describe("CONSULT-MTR - Tests", () => {
             await expect(result).rejects.toThrow();
         });
 
-        it("MTR ID", async () => {
-            const consult = new consultarDadosDoMTR({
-                mtrID: "00000",
-                authToken: _TOKEN,
-                API_BASE_URL: _BASE_URL,
-            });
-            const result = consult.getResult();
-
-            const regex = new RegExp(/Manifesto não encontrado!/);
-            await expect(result).rejects.toThrow(regex);
-        });
-
         it("Base URL", async () => {
             const base_url = Deno.env.get("TEST_BASE_API") === "SINIR"
                 ? MtrWSBaseURL.SIGOR
                 : MtrWSBaseURL.SINIR;
 
-            const consult = new consultarDadosDoMTR({
-                mtrID: _MTR,
+            const consult = new listarClasses({
                 authToken: _TOKEN,
                 API_BASE_URL: base_url,
             });

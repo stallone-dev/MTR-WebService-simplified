@@ -12,6 +12,8 @@
     "imports": {
         // Relative path imports
         "~route/": "./src/routes/",
+        "~internal/": "./src/internal/",
+        "~model/": "./src/model/",
 
         // Testing packages
         // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests

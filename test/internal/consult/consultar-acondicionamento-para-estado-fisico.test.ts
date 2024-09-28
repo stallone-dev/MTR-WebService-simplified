@@ -10,15 +10,16 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarResiduos } from "~route/consult/listar-residuos-ibama.ts";
+import { consultarAcondicionamentoParaEstadoFisico } from "../../../src/internal/consult/consultar-acondicionamento-para-estado-fisico.ts";
 
 /*
-    Testes para validação da API de listagem de resíduos com classificação IBAMA
+    Testes para validação da API de consulta de acondicionamentos por cod IBAMA
 */
 
-describe("LISTAR-RESIDUOS-IBAMA - Tests", () => {
+describe("LISTAR-ACONDICIONAMENTOS-PARA-ESTADO-FISICO - Tests", () => {
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
+    let _COD_ESTADO_FISICO: number;
 
     beforeAll(async () => {
         const _env = Deno.env.toObject();
@@ -26,6 +27,7 @@ describe("LISTAR-RESIDUOS-IBAMA - Tests", () => {
 
         _BASE_URL = MtrWSBaseURL[_base];
         _TOKEN = await generateTemporaryToken(_BASE_URL);
+        _COD_ESTADO_FISICO = 1;
     });
 
     afterAll(() => {
@@ -34,16 +36,16 @@ describe("LISTAR-RESIDUOS-IBAMA - Tests", () => {
 
     describe("Expected scenario", () => {
         it("Simple get result", async () => {
-            const consult = new listarResiduos({
+            const consult = new consultarAcondicionamentoParaEstadoFisico({
+                codEstadoFisico: _COD_ESTADO_FISICO,
                 authToken: _TOKEN,
                 API_BASE_URL: _BASE_URL,
             });
             const result = await consult.getResult();
 
             expect(result[1]).toMatchObject({
-                "resCodigoIbama": "150203",
-                "resDescricao":
-                    "Absorventes, materiais filtrantes, panos de limpeza e vestuário de proteção não abrangidos em 15 02 02 (*)",
+                "tiaCodigo": 4,
+                "tiaDescricao": "CAÇAMBA ABERTA",
             });
         });
     });
@@ -51,7 +53,8 @@ describe("LISTAR-RESIDUOS-IBAMA - Tests", () => {
     describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
-            const consult = new listarResiduos({
+            const consult = new consultarAcondicionamentoParaEstadoFisico({
+                codEstadoFisico: _COD_ESTADO_FISICO,
                 authToken: token,
                 API_BASE_URL: _BASE_URL,
             });
@@ -60,12 +63,24 @@ describe("LISTAR-RESIDUOS-IBAMA - Tests", () => {
             await expect(result).rejects.toThrow();
         });
 
+        it("Cod IBAMA - invalid", async () => {
+            const consult = new consultarAcondicionamentoParaEstadoFisico({
+                codEstadoFisico: 0,
+                authToken: _TOKEN,
+                API_BASE_URL: _BASE_URL,
+            });
+            const result = await consult.getResult();
+
+            expect(result).toEqual([]);
+        });
+
         it("Base URL", async () => {
             const base_url = Deno.env.get("TEST_BASE_API") === "SINIR"
                 ? MtrWSBaseURL.SIGOR
                 : MtrWSBaseURL.SINIR;
 
-            const consult = new listarResiduos({
+            const consult = new consultarAcondicionamentoParaEstadoFisico({
+                codEstadoFisico: _COD_ESTADO_FISICO,
                 authToken: _TOKEN,
                 API_BASE_URL: base_url,
             });

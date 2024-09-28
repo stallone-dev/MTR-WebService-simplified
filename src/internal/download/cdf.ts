@@ -11,15 +11,17 @@ import { ApiRequest } from "../../model/api-request.ts";
 
 export { downloadCDF };
 
+interface downloadCDFConfig {
+    cdfID: number;
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
 class downloadCDF extends ApiRequest {
     private token: MtrWSType.auth.token;
     private cdf_id: number;
 
-    constructor(
-        cdfID: number,
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+    constructor({ cdfID, authToken, API_BASE_URL }: downloadCDFConfig) {
         super(API_BASE_URL, MtrWSRoute.DOWNLOAD_CDF);
         this.token = authToken;
         this.cdf_id = cdfID;

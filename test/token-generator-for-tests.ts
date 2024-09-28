@@ -6,7 +6,7 @@ import {
     MtrWSBaseURL,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
-import { gerarAuthToken } from "~route/auth/auth.ts";
+import { gerarAuthToken } from "../src/internal/auth/auth.ts";
 
 export { generateTemporaryToken };
 

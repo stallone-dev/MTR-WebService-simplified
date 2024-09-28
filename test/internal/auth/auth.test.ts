@@ -9,7 +9,7 @@ import {
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { gerarAuthToken } from "~route/auth/auth.ts";
+import { gerarAuthToken } from "~internal/auth/auth.ts";
 
 /*
     Testes para validação da API de autenticação / geração de token de acesso

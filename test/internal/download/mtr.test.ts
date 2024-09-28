@@ -10,10 +10,10 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarAcondicionamentos } from "~route/consult/listar-acondicionamentos.ts";
+import { downloadCDF } from "../../../src/internal/download/cdf.ts";
 
 /*
-    Testes para validação da API de listagem de acondicionamentos
+    Testes para validação da API de download de CDF
 */
 
 describe("LISTAR-ACONDICIONAMENTOS - Tests", () => {

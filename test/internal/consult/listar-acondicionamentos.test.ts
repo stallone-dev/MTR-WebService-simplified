@@ -10,16 +10,15 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { consultarClasseParaCodIBAMA } from "~route/consult/consultar-classe-para-cod-ibama.ts";
+import { listarAcondicionamentos } from "../../../src/internal/consult/listar-acondicionamentos.ts";
 
 /*
-    Testes para validação da API de consulta de classe por cod IBAMA
+    Testes para validação da API de listagem de acondicionamentos
 */
 
-describe("LISTAR-CLASSES-PARA-COD-IBAMA - Tests", () => {
+describe("LISTAR-ACONDICIONAMENTOS - Tests", () => {
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
-    let _COD_IBAMA: string;
 
     beforeAll(async () => {
         const _env = Deno.env.toObject();
@@ -27,7 +26,6 @@ describe("LISTAR-CLASSES-PARA-COD-IBAMA - Tests", () => {
 
         _BASE_URL = MtrWSBaseURL[_base];
         _TOKEN = await generateTemporaryToken(_BASE_URL);
-        _COD_IBAMA = "170107";
     });
 
     afterAll(() => {
@@ -36,17 +34,15 @@ describe("LISTAR-CLASSES-PARA-COD-IBAMA - Tests", () => {
 
     describe("Expected scenario", () => {
         it("Simple get result", async () => {
-            const consult = new consultarClasseParaCodIBAMA({
-                codigoResiduo: _COD_IBAMA,
+            const consult = new listarAcondicionamentos({
                 authToken: _TOKEN,
                 API_BASE_URL: _BASE_URL,
             });
             const result = await consult.getResult();
 
             expect(result[1]).toMatchObject({
-                "claCodigo": 43,
-                "claDescricao": "CLASSE II A",
-                "claResolucao": "NBR 10.004",
+                "tiaCodigo": 4,
+                "tiaDescricao": "CAÇAMBA ABERTA",
             });
         });
     });
@@ -54,8 +50,7 @@ describe("LISTAR-CLASSES-PARA-COD-IBAMA - Tests", () => {
     describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
-            const consult = new consultarClasseParaCodIBAMA({
-                codigoResiduo: _COD_IBAMA,
+            const consult = new listarAcondicionamentos({
                 authToken: token,
                 API_BASE_URL: _BASE_URL,
             });
@@ -64,35 +59,12 @@ describe("LISTAR-CLASSES-PARA-COD-IBAMA - Tests", () => {
             await expect(result).rejects.toThrow();
         });
 
-        it("Cod IBAMA - empty", async () => {
-            const consult = new consultarClasseParaCodIBAMA({
-                codigoResiduo: "",
-                authToken: _TOKEN,
-                API_BASE_URL: _BASE_URL,
-            });
-            const result = consult.getResult();
-
-            await expect(result).rejects.toThrow();
-        });
-
-        it("Cod IBAMA - invalid", async () => {
-            const consult = new consultarClasseParaCodIBAMA({
-                codigoResiduo: "0000",
-                authToken: _TOKEN,
-                API_BASE_URL: _BASE_URL,
-            });
-            const result = await consult.getResult();
-
-            expect(result).toEqual([]);
-        });
-
         it("Base URL", async () => {
             const base_url = Deno.env.get("TEST_BASE_API") === "SINIR"
                 ? MtrWSBaseURL.SIGOR
                 : MtrWSBaseURL.SINIR;
 
-            const consult = new consultarClasseParaCodIBAMA({
-                codigoResiduo: _COD_IBAMA,
+            const consult = new listarAcondicionamentos({
                 authToken: _TOKEN,
                 API_BASE_URL: base_url,
             });

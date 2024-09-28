@@ -10,16 +10,16 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { consultarAcondicionamentoParaEstadoFisico } from "~route/consult/consultar-acondicionamento-para-estado-fisico.ts";
+import { consultarDadosDoMTR } from "../../../src/internal/consult/consultar-mtr.ts";
 
 /*
-    Testes para validação da API de consulta de acondicionamentos por cod IBAMA
+    Testes para validação da API de consulta do MTR individual
 */
 
-describe("LISTAR-ACONDICIONAMENTOS-PARA-ESTADO-FISICO - Tests", () => {
+describe("CONSULT-MTR - Tests", () => {
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
-    let _COD_ESTADO_FISICO: number;
+    let _MTR: string;
 
     beforeAll(async () => {
         const _env = Deno.env.toObject();
@@ -27,7 +27,7 @@ describe("LISTAR-ACONDICIONAMENTOS-PARA-ESTADO-FISICO - Tests", () => {
 
         _BASE_URL = MtrWSBaseURL[_base];
         _TOKEN = await generateTemporaryToken(_BASE_URL);
-        _COD_ESTADO_FISICO = 1;
+        _MTR = _env.TEST_CONSULT_MTR ?? "";
     });
 
     afterAll(() => {
@@ -35,26 +35,23 @@ describe("LISTAR-ACONDICIONAMENTOS-PARA-ESTADO-FISICO - Tests", () => {
     });
 
     describe("Expected scenario", () => {
-        it("Simple get result", async () => {
-            const consult = new consultarAcondicionamentoParaEstadoFisico({
-                codEstadoFisico: _COD_ESTADO_FISICO,
+        it("Simple consult MTR", async () => {
+            const consult = new consultarDadosDoMTR({
+                mtrID: _MTR,
                 authToken: _TOKEN,
                 API_BASE_URL: _BASE_URL,
             });
             const result = await consult.getResult();
 
-            expect(result[1]).toMatchObject({
-                "tiaCodigo": 4,
-                "tiaDescricao": "CAÇAMBA ABERTA",
-            });
+            expect(result).toMatchObject({ manNumero: _MTR });
         });
     });
 
     describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
-            const consult = new consultarAcondicionamentoParaEstadoFisico({
-                codEstadoFisico: _COD_ESTADO_FISICO,
+            const consult = new consultarDadosDoMTR({
+                mtrID: _MTR,
                 authToken: token,
                 API_BASE_URL: _BASE_URL,
             });
@@ -63,15 +60,16 @@ describe("LISTAR-ACONDICIONAMENTOS-PARA-ESTADO-FISICO - Tests", () => {
             await expect(result).rejects.toThrow();
         });
 
-        it("Cod IBAMA - invalid", async () => {
-            const consult = new consultarAcondicionamentoParaEstadoFisico({
-                codEstadoFisico: 0,
+        it("MTR ID", async () => {
+            const consult = new consultarDadosDoMTR({
+                mtrID: "00000",
                 authToken: _TOKEN,
                 API_BASE_URL: _BASE_URL,
             });
-            const result = await consult.getResult();
+            const result = consult.getResult();
 
-            expect(result).toEqual([]);
+            const regex = new RegExp(/Manifesto não encontrado!/);
+            await expect(result).rejects.toThrow(regex);
         });
 
         it("Base URL", async () => {
@@ -79,8 +77,8 @@ describe("LISTAR-ACONDICIONAMENTOS-PARA-ESTADO-FISICO - Tests", () => {
                 ? MtrWSBaseURL.SIGOR
                 : MtrWSBaseURL.SINIR;
 
-            const consult = new consultarAcondicionamentoParaEstadoFisico({
-                codEstadoFisico: _COD_ESTADO_FISICO,
+            const consult = new consultarDadosDoMTR({
+                mtrID: _MTR,
                 authToken: _TOKEN,
                 API_BASE_URL: base_url,
             });

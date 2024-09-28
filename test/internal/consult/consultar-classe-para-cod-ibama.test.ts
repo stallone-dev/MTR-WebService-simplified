@@ -10,15 +10,16 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarUnidadesDeMedida } from "~route/consult/listar-unidades.ts";
+import { consultarClasseParaCodIBAMA } from "../../../src/internal/consult/consultar-classe-para-cod-ibama.ts";
 
 /*
-    Testes para validação da API de listagem de unidades de medida
+    Testes para validação da API de consulta de classe por cod IBAMA
 */
 
-describe("LISTAR-UNIDADES-DE-MEDIDA - Tests", () => {
+describe("LISTAR-CLASSES-PARA-COD-IBAMA - Tests", () => {
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
+    let _COD_IBAMA: string;
 
     beforeAll(async () => {
         const _env = Deno.env.toObject();
@@ -26,6 +27,7 @@ describe("LISTAR-UNIDADES-DE-MEDIDA - Tests", () => {
 
         _BASE_URL = MtrWSBaseURL[_base];
         _TOKEN = await generateTemporaryToken(_BASE_URL);
+        _COD_IBAMA = "170107";
     });
 
     afterAll(() => {
@@ -34,16 +36,17 @@ describe("LISTAR-UNIDADES-DE-MEDIDA - Tests", () => {
 
     describe("Expected scenario", () => {
         it("Simple get result", async () => {
-            const consult = new listarUnidadesDeMedida({
+            const consult = new consultarClasseParaCodIBAMA({
+                codigoResiduo: _COD_IBAMA,
                 authToken: _TOKEN,
                 API_BASE_URL: _BASE_URL,
             });
             const result = await consult.getResult();
 
             expect(result[1]).toMatchObject({
-                "uniCodigo": 20,
-                "uniDescricao": "M³",
-                "uniSigla": "M³",
+                "claCodigo": 43,
+                "claDescricao": "CLASSE II A",
+                "claResolucao": "NBR 10.004",
             });
         });
     });
@@ -51,7 +54,8 @@ describe("LISTAR-UNIDADES-DE-MEDIDA - Tests", () => {
     describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
-            const consult = new listarUnidadesDeMedida({
+            const consult = new consultarClasseParaCodIBAMA({
+                codigoResiduo: _COD_IBAMA,
                 authToken: token,
                 API_BASE_URL: _BASE_URL,
             });
@@ -60,12 +64,35 @@ describe("LISTAR-UNIDADES-DE-MEDIDA - Tests", () => {
             await expect(result).rejects.toThrow();
         });
 
+        it("Cod IBAMA - empty", async () => {
+            const consult = new consultarClasseParaCodIBAMA({
+                codigoResiduo: "",
+                authToken: _TOKEN,
+                API_BASE_URL: _BASE_URL,
+            });
+            const result = consult.getResult();
+
+            await expect(result).rejects.toThrow();
+        });
+
+        it("Cod IBAMA - invalid", async () => {
+            const consult = new consultarClasseParaCodIBAMA({
+                codigoResiduo: "0000",
+                authToken: _TOKEN,
+                API_BASE_URL: _BASE_URL,
+            });
+            const result = await consult.getResult();
+
+            expect(result).toEqual([]);
+        });
+
         it("Base URL", async () => {
             const base_url = Deno.env.get("TEST_BASE_API") === "SINIR"
                 ? MtrWSBaseURL.SIGOR
                 : MtrWSBaseURL.SINIR;
 
-            const consult = new listarUnidadesDeMedida({
+            const consult = new consultarClasseParaCodIBAMA({
+                codigoResiduo: _COD_IBAMA,
                 authToken: _TOKEN,
                 API_BASE_URL: base_url,
             });

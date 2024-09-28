@@ -10,13 +10,13 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarClasses } from "~route/consult/listar-classes.ts";
+import { listarResiduos } from "../../../src/internal/consult/listar-residuos-ibama.ts";
 
 /*
-    Testes para validação da API de listagem de classes
+    Testes para validação da API de listagem de resíduos com classificação IBAMA
 */
 
-describe("LISTAR-CLASSES - Tests", () => {
+describe("LISTAR-RESIDUOS-IBAMA - Tests", () => {
     let _TOKEN: MtrWSType.auth.token;
     let _BASE_URL: MtrWSBaseURL;
 
@@ -34,16 +34,16 @@ describe("LISTAR-CLASSES - Tests", () => {
 
     describe("Expected scenario", () => {
         it("Simple get result", async () => {
-            const consult = new listarClasses({
+            const consult = new listarResiduos({
                 authToken: _TOKEN,
                 API_BASE_URL: _BASE_URL,
             });
             const result = await consult.getResult();
 
             expect(result[1]).toMatchObject({
-                "claCodigo": 43,
-                "claDescricao": "CLASSE II A",
-                "claResolucao": "NBR 10.004",
+                "resCodigoIbama": "150203",
+                "resDescricao":
+                    "Absorventes, materiais filtrantes, panos de limpeza e vestuário de proteção não abrangidos em 15 02 02 (*)",
             });
         });
     });
@@ -51,7 +51,7 @@ describe("LISTAR-CLASSES - Tests", () => {
     describe("Invalid scenarios", () => {
         it("Token", async () => {
             const token = "Bearer _";
-            const consult = new listarClasses({
+            const consult = new listarResiduos({
                 authToken: token,
                 API_BASE_URL: _BASE_URL,
             });
@@ -65,7 +65,7 @@ describe("LISTAR-CLASSES - Tests", () => {
                 ? MtrWSBaseURL.SIGOR
                 : MtrWSBaseURL.SINIR;
 
-            const consult = new listarClasses({
+            const consult = new listarResiduos({
                 authToken: _TOKEN,
                 API_BASE_URL: base_url,
             });
