@@ -1,7 +1,7 @@
-import { solicitarAlteracaoRecebimentoMTR } from "./create/alteracao-mtr.ts";
-import { gerarCDF } from "./create/cdf.ts";
-import { gerarLoteMTR } from "./create/lote-mtr.ts";
-import { gerarMTRComplementar } from "./create/mtr-complementar.ts";
+import { solicitarAlteracaoRecebimentoMTR } from "~internal/create/alteracao-mtr.ts";
+import { gerarCDF } from "~internal/create/cdf.ts";
+import { gerarLoteMTR } from "~internal/create/lote-mtr.ts";
+import { gerarMTRComplementar } from "~internal/create/mtr-complementar.ts";
 
 export const _create = {
     gerarCDF,

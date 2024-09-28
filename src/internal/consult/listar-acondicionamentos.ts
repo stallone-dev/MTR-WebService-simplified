@@ -7,7 +7,7 @@ import {
     MtrWSRoute,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
-import { ApiRequest } from "../../model/api-request.ts";
+import { ApiRequest } from "~model/api-request.ts";
 
 export { listarAcondicionamentos };
 

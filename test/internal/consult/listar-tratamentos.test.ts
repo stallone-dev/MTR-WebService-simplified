@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarTratamentos } from "../../../src/internal/consult/listar-tratamentos.ts";
+import { listarTratamentos } from "~internal/consult/listar-tratamentos.ts";
 
 /*
     Testes para validação da API de listagem de tratamentos

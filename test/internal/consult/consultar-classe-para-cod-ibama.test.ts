@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { consultarClasseParaCodIBAMA } from "../../../src/internal/consult/consultar-classe-para-cod-ibama.ts";
+import { consultarClasseParaCodIBAMA } from "~internal/consult/consultar-classe-para-cod-ibama.ts";
 
 /*
     Testes para validação da API de consulta de classe por cod IBAMA

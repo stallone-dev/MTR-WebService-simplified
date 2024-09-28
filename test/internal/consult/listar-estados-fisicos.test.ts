@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarEstadosFisicos } from "../../../src/internal/consult/listar-estados-fisicos.ts";
+import { listarEstadosFisicos } from "~internal/consult/listar-estados-fisicos.ts";
 
 /*
     Testes para validação da API de listagem de estados fisicos

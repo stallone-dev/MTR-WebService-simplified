@@ -7,19 +7,21 @@ import {
     MtrWSRoute,
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
-import { ApiRequest } from "../../model/api-request.ts";
+import { ApiRequest } from "~model/api-request.ts";
 
 export { downloadMTR };
 
-class downloadMTR extends ApiRequest {
-    private token: MtrWSType.auth.token;
-    private mtr_id: number;
+interface downloadMTRConfig {
+    mtrID: string;
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
 
-    constructor(
-        mtrID: number,
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+class downloadMTR extends ApiRequest {
+    private readonly token: MtrWSType.auth.token;
+    private readonly mtr_id: string;
+
+    constructor({ mtrID, authToken, API_BASE_URL }: downloadMTRConfig) {
         super(API_BASE_URL, MtrWSRoute.DOWNLOAD_MTR);
         this.token = authToken;
         this.mtr_id = mtrID;

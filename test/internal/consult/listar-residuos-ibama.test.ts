@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarResiduos } from "../../../src/internal/consult/listar-residuos-ibama.ts";
+import { listarResiduos } from "~internal/consult/listar-residuos-ibama.ts";
 
 /*
     Testes para validação da API de listagem de resíduos com classificação IBAMA

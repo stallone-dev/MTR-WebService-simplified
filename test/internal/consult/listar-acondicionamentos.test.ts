@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarAcondicionamentos } from "../../../src/internal/consult/listar-acondicionamentos.ts";
+import { listarAcondicionamentos } from "~internal/consult/listar-acondicionamentos.ts";
 
 /*
     Testes para validação da API de listagem de acondicionamentos

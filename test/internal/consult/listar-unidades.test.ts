@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarUnidadesDeMedida } from "../../../src/internal/consult/listar-unidades.ts";
+import { listarUnidadesDeMedida } from "~internal/consult/listar-unidades.ts";
 
 /*
     Testes para validação da API de listagem de unidades de medida

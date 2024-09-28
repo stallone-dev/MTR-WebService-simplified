@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { consultarDadosDoMTR } from "../../../src/internal/consult/consultar-mtr.ts";
+import { consultarDadosDoMTR } from "~internal/consult/consultar-mtr.ts";
 
 /*
     Testes para validação da API de consulta do MTR individual

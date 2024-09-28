@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { listarClasses } from "../../../src/internal/consult/listar-classes.ts";
+import { listarClasses } from "~internal/consult/listar-classes.ts";
 
 /*
     Testes para validação da API de listagem de classes

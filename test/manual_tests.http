@@ -2,6 +2,7 @@
 @cpf = {{_cpf}}
 @senha= {{_senha}}
 @unidade = {{_unidade}}
+@auth = {{Auth.response.body.$.objetoResposta}}
 
 # @name Auth
 POST https://admin.sinir.gov.br/apiws/rest/gettoken HTTP/1.1
@@ -13,9 +14,8 @@ Content-Type: application/json
     "unidade": "{{unidade}}"
 }
 
-@auth = {{Auth.response.body.$.objetoResposta}}
 ###
 
-GET https://admin.sinir.gov.br/apiws/rest/retornaListaAcondicionamentoPorEstadoFisico/1 HTTP/1.1
+POST https://admin.sinir.gov.br/apiws/rest/downloadCertificado/11111 HTTP/1.1
 content-Type: application/json
 Authorization: @{{auth}}

@@ -10,7 +10,7 @@ import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
-import { consultarAcondicionamentoParaEstadoFisico } from "../../../src/internal/consult/consultar-acondicionamento-para-estado-fisico.ts";
+import { consultarAcondicionamentoParaEstadoFisico } from "~internal/consult/consultar-acondicionamento-para-estado-fisico.ts";
 
 /*
     Testes para validação da API de consulta de acondicionamentos por cod IBAMA
