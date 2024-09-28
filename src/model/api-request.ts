@@ -68,10 +68,15 @@ abstract class ApiRequest {
         };
 
         const request = new Request(_URL, options);
-        const response = (await fetch(request)).json();
+        const response = await fetch(request);
+
+        /** Ajuste de retorno caso seja um download de PDF */
+        if (response.headers.get("content-type") === "application/pdf") {
+            return response.body as T_resp_model;
+        }
 
         /** Consumo da API com transformação direta em JSON */
-        const result = await response as MtrWSType.httpModel.response;
+        const result = await response.json() as MtrWSType.httpModel.response;
 
         /** Verificação dos erros internos da API */
         if (result.erro !== false) {
