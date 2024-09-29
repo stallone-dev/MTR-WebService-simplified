@@ -1,21 +1,26 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@stallone-dev/types-mtr-web-service@0.6": "0.6.0",
+    "jsr:@stallone-dev/types-mtr-web-service@~0.6.1": "0.6.1",
     "jsr:@std/assert@^1.0.5": "1.0.5",
+    "jsr:@std/bytes@^1.0.2": "1.0.2",
     "jsr:@std/expect@^1.0.2": "1.0.3",
     "jsr:@std/internal@^1.0.3": "1.0.3",
+    "jsr:@std/io@~0.224.9": "0.224.9",
     "jsr:@std/testing@^1.0.2": "1.0.2"
   },
   "jsr": {
-    "@stallone-dev/types-mtr-web-service@0.6.0": {
-      "integrity": "d18df0c12044986a875561cd946e2bee197f1051f2feda5849fa3655b9be1497"
+    "@stallone-dev/types-mtr-web-service@0.6.1": {
+      "integrity": "14d1827f35493a3785858f8e7bb7aa92af71cca166eba6c2c5478956eb025588"
     },
     "@std/assert@1.0.5": {
       "integrity": "e37da8e4033490ce613eec4ac1d78dba1faf5b02a3f6c573a28f15365b9b440f",
       "dependencies": [
         "jsr:@std/internal"
       ]
+    },
+    "@std/bytes@1.0.2": {
+      "integrity": "fbdee322bbd8c599a6af186a1603b3355e59a5fb1baa139f8f4c3c9a1b3e3d57"
     },
     "@std/expect@1.0.3": {
       "integrity": "d9cbd03323ef7feafd1e969ed85d5edb04ebbd9937b0fe7a52d5ff53be8e913a",
@@ -27,14 +32,21 @@
     "@std/internal@1.0.3": {
       "integrity": "208e9b94a3d5649bd880e9ca38b885ab7651ab5b5303a56ed25de4755fb7b11e"
     },
+    "@std/io@0.224.9": {
+      "integrity": "4414664b6926f665102e73c969cfda06d2c4c59bd5d0c603fd4f1b1c840d6ee3",
+      "dependencies": [
+        "jsr:@std/bytes"
+      ]
+    },
     "@std/testing@1.0.2": {
       "integrity": "9e8a7f4e26c219addabe7942d09c3450fa0a74e9662341961bc0ef502274dec3"
     }
   },
   "workspace": {
     "dependencies": [
-      "jsr:@stallone-dev/types-mtr-web-service@0.6",
+      "jsr:@stallone-dev/types-mtr-web-service@~0.6.1",
       "jsr:@std/expect@^1.0.2",
+      "jsr:@std/io@~0.224.9",
       "jsr:@std/testing@^1.0.2"
     ]
   }

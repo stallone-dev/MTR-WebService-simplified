@@ -11,6 +11,7 @@ import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
 import { downloadCDF } from "~internal/download/cdf.ts";
+import { takeTemporaryDownloadPDF } from "../../download-process-for-tests.ts";
 
 /*
     Testes para validação da API de download de CDF
@@ -38,16 +39,23 @@ describe("DOWNLOAD-DE-CDF - Tests", () => {
     });
 
     describe("Expected scenario", { ignore: _ignore }, () => {
-        // it("Simple get result", async () => {
-        //     const consult = new downloadCDF({
-        //         cdfID: _CDF_ID,
-        //         authToken: _TOKEN,
-        //         API_BASE_URL: _BASE_URL,
-        //     });
-        //     const result = await consult.getResult();
+        it("Simple get result", async () => {
+            const consult = new downloadCDF({
+                cdfID: _CDF_ID,
+                authToken: _TOKEN,
+                API_BASE_URL: _BASE_URL,
+            });
 
-        //     expect(result).toContain("%PDF-1.5");
-        // });
+            const result = await consult.getResult();
+
+            const final = await takeTemporaryDownloadPDF(result.getReader());
+
+            expect(final).toMatchObject({
+                error: false,
+                info: "Success!",
+                path: "./temp_file.pdf",
+            });
+        });
     });
 
     describe("Invalid scenarios", () => {

@@ -19,9 +19,10 @@
         // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests
         "@std/expect": "jsr:@std/expect@^1.0.2",
         "@std/testing": "jsr:@std/testing@^1.0.2",
+        "@std/io": "jsr:@std/io@^0.224.9",
 
         // Dependencies
-        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.6.0"
+        "@stallone-dev/types-mtr-web-service": "jsr:@stallone-dev/types-mtr-web-service@^0.6.1"
     },
 
     // ======= Tasks area =======
