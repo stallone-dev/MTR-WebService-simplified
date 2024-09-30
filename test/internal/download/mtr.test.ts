@@ -7,6 +7,7 @@ import {
     type MtrWSType,
 } from "@stallone-dev/types-mtr-web-service";
 import { generateTemporaryToken } from "../../token-generator-for-tests.ts";
+import { takeTemporaryDownloadPDF } from "../../download-process-for-tests.ts";
 import { afterAll, beforeAll, describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
@@ -38,16 +39,23 @@ describe("DOWNLOAD-DE-CDF - Tests", () => {
     });
 
     describe("Expected scenario", { ignore: _ignore }, () => {
-        // it("Simple get result", async () => {
-        //     const consult = new downloadMTR({
-        //         mtrID: _MTR_ID,
-        //         authToken: _TOKEN,
-        //         API_BASE_URL: _BASE_URL,
-        //     });
-        //     const result = await consult.getResult();
+        it("Simple get result", async () => {
+            const consult = new downloadMTR({
+                mtrID: _MTR_ID,
+                authToken: _TOKEN,
+                API_BASE_URL: _BASE_URL,
+            });
 
-        //     expect(result).toContain("%PDF-1.5");
-        // });
+            const result = await consult.getResult();
+
+            const final = await takeTemporaryDownloadPDF(result.getReader());
+
+            expect(final).toMatchObject({
+                error: false,
+                info: "Success!",
+                path: "./temp_file.pdf",
+            });
+        });
     });
 
     describe("Invalid scenarios", () => {

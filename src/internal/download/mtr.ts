@@ -11,12 +11,59 @@ import { ApiRequest } from "~model/api-request.ts";
 
 export { downloadMTR };
 
+/** Interface para implementação */
 interface downloadMTRConfig {
     mtrID: string;
     authToken: MtrWSType.auth.token;
     API_BASE_URL: MtrWSBaseURL;
 }
 
+/**
+ * Módulo de download de MTR
+ *
+ * @example Implementando a função
+ * ```ts
+ *  import { downloadMTR } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *  const mtr_id = "251001001010"
+ *
+ *  // Preparando a API
+ *  const consult = new downloadMTR({
+ *      mtrID: mtr_id,
+ *      authToken: token,
+ *      API_BASE_URL: base_url
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * ReadableStream * }
+ * ```
+ *
+ * @example Transformadno o stream em um arquivo.pdf (DenoJS)
+ * ```ts
+ * import { copy, readerFromStreamReader } from "@std/io";
+ * import { downloadMTR } from "..."
+ *
+ * // Capturando o resultado da API
+ * const result = await new downloadMTR(...).getResult()
+ *
+ * // Criando Preparando um espaço de arquivo
+ * const FILE_PATH = ".temp_file.pdf";
+ * const file = await Deno.open(FILE_PATH, { create: true, write: true, read: true }
+ *
+ * // Convertendo o Stream da API em algo utilizáleo pelo DenoJS
+ * const reader = readerFromStreamReader(result.getReader())
+ *
+ * // Transferindo os dados do Stream para o arquivo
+ * await copy(reader, file);
+ *
+ * // Fechando os dados do arquivo
+ * file.close()
+ * ```
+ */
 class downloadMTR extends ApiRequest {
     private readonly token: MtrWSType.auth.token;
     private readonly mtr_id: string;
