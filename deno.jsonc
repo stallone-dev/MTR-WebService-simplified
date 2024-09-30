@@ -11,8 +11,7 @@
     // General import packages and relative paths
     "imports": {
         // Relative path imports
-        "~route/": "./src/routes/",
-        "~internal/": "./src/internal/",
+        "~internal/": "./src/routes/",
         "~model/": "./src/model/",
 
         // Testing packages
@@ -46,13 +45,13 @@
 
     // ======= JSR publish area =======
 
-    "name": "@stallone-dev/mtr-web-service",
+    "name": "@stallone-dev/mtr-web-service-internals",
     "version": "0.1.0",
     "exports": "./mod.ts",
     "license": "MPL-2.0",
 
     "publish": {
-        "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".env*"]
+        "exclude": ["./test", "./coverage", ".editorconfig", ".vscode", ".github", ".zed", ".env*"]
     },
 
     // ======= Source code standardization area =======

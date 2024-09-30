@@ -3,7 +3,7 @@ import { gerarCDF } from "~internal/create/cdf.ts";
 import { gerarLoteMTR } from "~internal/create/lote-mtr.ts";
 import { gerarMTRComplementar } from "~internal/create/mtr-complementar.ts";
 
-export const _create = {
+export const create = {
     gerarCDF,
     gerarLoteMTR,
     gerarMTRComplementar,

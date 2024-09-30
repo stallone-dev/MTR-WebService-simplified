@@ -9,7 +9,7 @@ import { listarTratamentos } from "~internal/consult/listar-tratamentos.ts";
 import { listarUnidadesDeMedida } from "~internal/consult/listar-unidades.ts";
 import { listarResiduos } from "~internal/consult/listar-residuos-ibama.ts";
 
-export const _consult = {
+export const consult = {
     listarResiduos,
     listarClasses,
     listarAcondicionamentos,
