@@ -11,6 +11,37 @@ import { ApiRequest } from "~model/api-request.ts";
 
 export { receberLoteMTR };
 
+/** Interface para implementação */
+interface aceitarAlteracaoMTRConfig {
+    dadosAceiteAlteracaoMTR:
+        MtrWSType.requestModel.aceitarAlteracaoRecebimentoMTR;
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
+/**
+ * Módulo de geração de MTR complementar
+ *
+ * @example
+ * ```ts
+ *  import { aceitarAlteracaoMTR } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *  const data_to_accept_mtr_change =
+ *
+ *  // Preparando a API
+ *  const consult = new aceitarAlteracaoMTR({
+ *      authToken: token,
+ *      dadosAceiteAlteracaoMTR: data_to_accept_mtr_change,
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Resultado da geração do MTR complementar * }
+ * ```
+ */
 class receberLoteMTR extends ApiRequest {
     private token: MtrWSType.auth.token;
     private dados_mtr_para_recebimento: MtrWSType.requestModel.receberLoteMTR[];

@@ -11,15 +11,45 @@ import { ApiRequest } from "~model/api-request.ts";
 
 export { cancelarMTR };
 
+/** Interface para implementação */
+interface cancelarMTRConfig {
+    dadosParaCancelamentoMTR: MtrWSType.requestModel.cancelarMTR;
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
+/**
+ * Módulo de cancelamento de MTRs
+ *
+ * @example
+ * ```ts
+ *  import { aceitarAlteracaoMTR } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *  const data_to_accept_mtr_change =
+ *
+ *  // Preparando a API
+ *  const consult = new aceitarAlteracaoMTR({
+ *      authToken: token,
+ *      dadosAceiteAlteracaoMTR: data_to_accept_mtr_change,
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Resultado da geração do MTR complementar * }
+ * ```
+ */
 class cancelarMTR extends ApiRequest {
     private token: MtrWSType.auth.token;
     private dados_para_cancelamento_mtr: MtrWSType.requestModel.cancelarMTR;
 
-    constructor(
-        dadosParaCancelamentoMTR: MtrWSType.requestModel.cancelarMTR,
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+    constructor({
+        dadosParaCancelamentoMTR,
+        authToken,
+        API_BASE_URL,
+    }: cancelarMTRConfig) {
         super(API_BASE_URL, MtrWSRoute.CANCELAR_MTR);
         this.token = authToken;
         this.dados_para_cancelamento_mtr = dadosParaCancelamentoMTR;

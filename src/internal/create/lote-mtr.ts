@@ -11,15 +11,46 @@ import { ApiRequest } from "~model/api-request.ts";
 
 export { gerarLoteMTR };
 
+/** Interface para implementação */
+interface gerarLoteMTRConfig {
+    dadosParaEmissaoLoteMTR: MtrWSType.requestModel.gerarLoteMTR[];
+    authToken: MtrWSType.auth.token;
+    API_BASE_URL: MtrWSBaseURL;
+}
+
+/**
+ * Módulo de geração de MTRs
+ *
+ * @example
+ * ```ts
+ *  import { gerarLoteMTR } from "..."
+ *  import { MtrWSBaseURL } from "..."
+ *
+ *  const token = "Bearer _TOKEN_"
+ *  const base_url = MtrWSBaseURL.SINIR;
+ *  const data_to_generate_mtr =
+ *
+ *  // Preparando a API
+ *  const consult = new gerarLoteMTR({
+ *      authToken: token,
+ *      API_BASE_URL: base_url,
+ *      dadosParaEmissaoLoteMTR: data_to_generate_mtr,
+ *  });
+ *
+ *  // Capturando o resultado
+ *  const result = await consult.getResult();
+ *  // ==> { * Resultado da geração dos MTRs * }
+ * ```
+ */
 class gerarLoteMTR extends ApiRequest {
     private token: MtrWSType.auth.token;
     private dados_para_emissao_lote_mtr: MtrWSType.requestModel.gerarLoteMTR[];
 
-    constructor(
-        dadosParaEmissaoLoteMTR: MtrWSType.requestModel.gerarLoteMTR[],
-        authToken: MtrWSType.auth.token,
-        API_BASE_URL: MtrWSBaseURL,
-    ) {
+    constructor({
+        dadosParaEmissaoLoteMTR,
+        authToken,
+        API_BASE_URL,
+    }: gerarLoteMTRConfig) {
         super(API_BASE_URL, MtrWSRoute.GERAR_MTR);
         this.token = authToken;
         this.dados_para_emissao_lote_mtr = dadosParaEmissaoLoteMTR;
