@@ -1,31 +1,53 @@
 {
-  "version": "3",
-  "packages": {
-    "specifiers": {
-      "jsr:@stallone-dev/types-mtr-web-service@^0.4.0": "jsr:@stallone-dev/types-mtr-web-service@0.4.0",
-      "jsr:@std/fs@^1.0.3": "jsr:@std/fs@1.0.3",
-      "jsr:@std/path@^1.0.4": "jsr:@std/path@1.0.4"
+  "version": "4",
+  "specifiers": {
+    "jsr:@stallone-dev/types-mtr-web-service@~0.6.1": "0.6.1",
+    "jsr:@std/assert@^1.0.5": "1.0.5",
+    "jsr:@std/bytes@^1.0.2": "1.0.2",
+    "jsr:@std/expect@^1.0.2": "1.0.3",
+    "jsr:@std/internal@^1.0.3": "1.0.3",
+    "jsr:@std/io@~0.224.9": "0.224.9",
+    "jsr:@std/testing@^1.0.2": "1.0.2"
+  },
+  "jsr": {
+    "@stallone-dev/types-mtr-web-service@0.6.1": {
+      "integrity": "14d1827f35493a3785858f8e7bb7aa92af71cca166eba6c2c5478956eb025588"
     },
-    "jsr": {
-      "@stallone-dev/types-mtr-web-service@0.4.0": {
-        "integrity": "0189d3dadc44a16d09887f50967963135d429e261fa1f11badf26d1d3a6322e8"
-      },
-      "@std/fs@1.0.3": {
-        "integrity": "3cb839b1360b0a42d8b367c3093bfe4071798e6694fa44cf1963e04a8edba4fe",
-        "dependencies": [
-          "jsr:@std/path@^1.0.4"
-        ]
-      },
-      "@std/path@1.0.4": {
-        "integrity": "48dd5d8389bcfcd619338a01bdf862cb7799933390146a54ae59356a0acc7105"
-      }
+    "@std/assert@1.0.5": {
+      "integrity": "e37da8e4033490ce613eec4ac1d78dba1faf5b02a3f6c573a28f15365b9b440f",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/bytes@1.0.2": {
+      "integrity": "fbdee322bbd8c599a6af186a1603b3355e59a5fb1baa139f8f4c3c9a1b3e3d57"
+    },
+    "@std/expect@1.0.3": {
+      "integrity": "d9cbd03323ef7feafd1e969ed85d5edb04ebbd9937b0fe7a52d5ff53be8e913a",
+      "dependencies": [
+        "jsr:@std/assert",
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/internal@1.0.3": {
+      "integrity": "208e9b94a3d5649bd880e9ca38b885ab7651ab5b5303a56ed25de4755fb7b11e"
+    },
+    "@std/io@0.224.9": {
+      "integrity": "4414664b6926f665102e73c969cfda06d2c4c59bd5d0c603fd4f1b1c840d6ee3",
+      "dependencies": [
+        "jsr:@std/bytes"
+      ]
+    },
+    "@std/testing@1.0.2": {
+      "integrity": "9e8a7f4e26c219addabe7942d09c3450fa0a74e9662341961bc0ef502274dec3"
     }
   },
-  "remote": {},
   "workspace": {
     "dependencies": [
-      "jsr:@stallone-dev/types-mtr-web-service@^0.4.0",
-      "jsr:@std/fs@^1.0.3"
+      "jsr:@stallone-dev/types-mtr-web-service@~0.6.1",
+      "jsr:@std/expect@^1.0.2",
+      "jsr:@std/io@~0.224.9",
+      "jsr:@std/testing@^1.0.2"
     ]
   }
 }

@@ -1,0 +1,6 @@
+.env*
+!.env.example
+auth_file
+coverage-log
+.vscode
+.zed
