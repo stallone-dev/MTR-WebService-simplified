@@ -1,6 +1,6 @@
 .env*
 !.env.example
 auth_file
-coverage-log
+coverage*
 .vscode
 .zed
