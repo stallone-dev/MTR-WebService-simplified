@@ -3,5 +3,9 @@
 */
 
 import { MtrWSInternals } from "./src/main.ts";
+import {
+    MtrWSBaseURL,
+    type MtrWSType,
+} from "@stallone-dev/types-mtr-web-service";
 
-export { MtrWSInternals };
+export { MtrWSBaseURL, MtrWSInternals, type MtrWSType };
